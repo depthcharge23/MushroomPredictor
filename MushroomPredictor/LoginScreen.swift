@@ -13,24 +13,37 @@ struct LoginScreen: View {
     @State var username: String = ""
     
     var body: some View {
-        VStack(alignment: .leading) {
-            Text("Username")
-            TextField("Username", text: $username)
-                .padding()
-                .border(Color.gray, width: 1)
+        ZStack {
+            Color.red
+                .edgesIgnoringSafeArea(.all)
             
-            Text("Password")
-            SecureField("Password", text: $password)
-                .padding()
+            VStack(alignment: .leading) {
+                Text("Username")
+                    .foregroundColor(Color.white)
+                
+                TextField("Username", text: $username)
+                    .padding(10)
+                    .border(Color.gray, width: 1)
+                    .background(Color.white)
+                
+                Text("Password")
+                    .foregroundColor(Color.white)
+                
+                SecureField("Password", text: $password)
+                    .padding(10)
+                    .border(Color.gray, width: 1)
+                    .background(Color.white)
+                
+                Button(action: {}) {
+                    Text("Login")
+                        .padding(10)
+                        .foregroundColor(Color.black)
+                }
                 .border(Color.gray, width: 1)
-            
-            Button(action: {}) {
-                Text("Login")
-                    .padding()
+                .background(Color.white)
             }
-            .border(Color.blue, width: 1)
+            .padding(25)
         }
-        .padding(25)
     }
 }
 
