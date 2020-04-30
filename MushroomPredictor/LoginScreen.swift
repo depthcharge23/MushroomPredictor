@@ -14,25 +14,31 @@ struct LoginScreen: View {
     
     var body: some View {
         ZStack {
-            Color.red
+            Color(red: 199 / 255, green: 45 / 255, blue: 66 / 255)
                 .edgesIgnoringSafeArea(.all)
             
-            VStack(alignment: .leading) {
-                Text("Username")
-                    .foregroundColor(Color.white)
+            VStack {
                 
-                TextField("Username", text: $username)
-                    .padding(10)
-                    .border(Color.gray, width: 1)
-                    .background(Color.white)
-                
-                Text("Password")
-                    .foregroundColor(Color.white)
-                
-                SecureField("Password", text: $password)
-                    .padding(10)
-                    .border(Color.gray, width: 1)
-                    .background(Color.white)
+                Image("MushroomLogo")
+                    .padding()
+                VStack(alignment: .leading) {
+                    Text("Username")
+                        .foregroundColor(Color.white)
+                    
+                    TextField("Username", text: $username)
+                        .padding(5)
+                        .border(Color.gray, width: 1)
+                        .background(Color.white)
+                    
+                    Text("Password")
+                        .foregroundColor(Color.white)
+                    
+                    SecureField("Password", text: $password)
+                        .padding(5)
+                        .border(Color.gray, width: 1)
+                        .background(Color.white)
+                    
+                }
                 
                 Button(action: {}) {
                     Text("Login")
