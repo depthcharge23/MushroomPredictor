@@ -8,6 +8,10 @@
 
 import SwiftUI
 
+func checkActiveDirectory(_ username: String, _ password: String) {
+    
+}
+
 struct LoginScreen: View {
     @State var password: String = ""
     @State var username: String = ""
