@@ -15,6 +15,7 @@
 		C510DAA32459D5F200ECDC65 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C510DAA12459D5F200ECDC65 /* LaunchScreen.storyboard */; };
 		C510DAAE2459D5F200ECDC65 /* MushroomPredictorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C510DAAD2459D5F200ECDC65 /* MushroomPredictorTests.swift */; };
 		C510DABB245A5D8F00ECDC65 /* Predictor.swift in Sources */ = {isa = PBXBuildFile; fileRef = C510DABA245A5D8F00ECDC65 /* Predictor.swift */; };
+		C510DAC1245E833E00ECDC65 /* PredictorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C510DAC0245E833E00ECDC65 /* PredictorView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -40,6 +41,7 @@
 		C510DAAD2459D5F200ECDC65 /* MushroomPredictorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MushroomPredictorTests.swift; sourceTree = "<group>"; };
 		C510DAAF2459D5F200ECDC65 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		C510DABA245A5D8F00ECDC65 /* Predictor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Predictor.swift; sourceTree = "<group>"; };
+		C510DAC0245E833E00ECDC65 /* PredictorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = PredictorView.swift; path = ../PredictorView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -81,6 +83,7 @@
 		C510DA952459D5F200ECDC65 /* MushroomPredictor */ = {
 			isa = PBXGroup;
 			children = (
+				C510DAC0245E833E00ECDC65 /* PredictorView.swift */,
 				C510DA962459D5F200ECDC65 /* AppDelegate.swift */,
 				C510DA982459D5F200ECDC65 /* SceneDelegate.swift */,
 				C510DA9A2459D5F200ECDC65 /* ContentView.swift */,
@@ -213,6 +216,7 @@
 			files = (
 				C510DA972459D5F200ECDC65 /* AppDelegate.swift in Sources */,
 				C510DA992459D5F200ECDC65 /* SceneDelegate.swift in Sources */,
+				C510DAC1245E833E00ECDC65 /* PredictorView.swift in Sources */,
 				C510DABB245A5D8F00ECDC65 /* Predictor.swift in Sources */,
 				C510DA9B2459D5F200ECDC65 /* ContentView.swift in Sources */,
 			);

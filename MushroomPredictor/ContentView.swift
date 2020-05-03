@@ -9,8 +9,10 @@
 import SwiftUI
 
 struct ContentView: View {
+    private var predictor = Predictor(prediction: "", confidence: 0.0)
+    
     var body: some View {
-        Predictor()
+        PredictorView(predictor: self.predictor)
     }
 }
 
