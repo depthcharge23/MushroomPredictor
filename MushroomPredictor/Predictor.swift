@@ -10,33 +10,50 @@ import NetworkExtension
 
 class Predictor {
     
-    private var prediction: String
-    private var confidence: Double
-    
-    init(prediction: String, confidence: Double) {
-        self.prediction = prediction
-        self.confidence = confidence
-    }
-    
-    func getPrediction() -> String {
-        return self.prediction
-    }
-    
-    func getConfidence() -> Double {
-        return self.confidence
-    }
-    
-    func postJson() {
-        let url = URL(string: "https://mushroom-predictor.azurewebsites.net/predict-mushroom")!
+    private func constructRtn(responseJSON: [String: Any]) -> [String: Any] {
+        var rtn: [String: Any] = [:]
         
-        var request = URLRequest(url: url)
-        request.httpMethod = "POST"
-        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        if let prediction = responseJSON["prediction"] as? Int {
+            if prediction == 1 {
+                rtn["prediction"] = "Poisonous"
+            } else if prediction == 2 {
+                rtn["prediction"] = "Edible"
+            } else {
+                rtn["prediction"] = "Unknown"
+            }
+        } else {
+            rtn["prediction"] = "Unkown"
+        }
         
-        let json: [String: Any] = ["data": [3,4,1,1,8,3,1,2,1,1,4,4,4,8,8,1,3,2,6,1,4,5]]
+        if let confidence = responseJSON["confidence"] as? Int {
+            rtn["confidence"] = Double(confidence) * 100.0
+        } else {
+            rtn["confidence"] = 0.0
+        }
+        
+        return rtn
+    }
+    
+    func postJson(capShape: Int, capSurface: Int, capColor: Int, bruises: Int, odor: Int, gillAttachment: Int,
+                  gillSpacing: Int, gillSize: Int, gillColor: Int, stalkShape: Int, stalkRoot: Int,
+                  stalkSurfaceAboveRing: Int, stalkSurfaceBelowRing: Int, stalkColorAboveRing: Int,
+                  stalkColorBelowRing: Int, veilType: Int, veilColor: Int, ringNumber: Int, ringType: Int,
+                  sporePrintColor: Int, population: Int, habitat: Int) -> [String: Any] {
+        
+        var rtn: [String: Any] = [:]
+        
+        let json: [String: Any] = ["data": [capShape, capSurface, capColor, bruises, odor, gillAttachment,
+                                            gillSpacing, gillSize, gillColor, stalkShape, stalkRoot,
+                                            stalkSurfaceAboveRing, stalkSurfaceBelowRing, stalkColorAboveRing,
+                                            stalkColorBelowRing, veilType, veilColor, ringNumber, ringType,
+                                            sporePrintColor, population, habitat]]
         
         let jsonData = try? JSONSerialization.data(withJSONObject: json)
         
+        let url = URL(string: "https://mushroom-predictor.azurewebsites.net/predict-mushroom")!
+        var request = URLRequest(url: url)
+        request.httpMethod = "POST"
+        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
         request.httpBody = jsonData
         
         let task = URLSession.shared.dataTask(with: request) { data, response, error in
@@ -48,26 +65,12 @@ class Predictor {
             let responseJSON = try? JSONSerialization.jsonObject(with: data, options: [])
 
             if let responseJSON = responseJSON as? [String: Any] {
-                if let prediction = responseJSON["prediction"] as? Int {
-                    if prediction == 1 {
-                        self.prediction = "Poisonous"
-                    } else if prediction == 2 {
-                        self.prediction = "Edible"
-                    } else {
-                        self.prediction = "Unknown"
-                    }
-                } else {
-                    self.prediction = "Unkown"
-                }
-                
-                if let confidence = responseJSON["confidence"] as? Int {
-                    self.confidence = Double(confidence) * 100.0
-                } else {
-                    self.confidence = 0.0
-                }
+                rtn = self.constructRtn(responseJSON: responseJSON)
             }
         }
         
         task.resume()
+        
+        return rtn
     }
 }

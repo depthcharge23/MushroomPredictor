@@ -76,7 +76,10 @@ struct PredictorView: View {
     @State private var selectedPopulation = 0
     @State private var selectedHabitat = 0
     
-    var predictor: Predictor
+    var predictor: Predictor = Predictor()
+    
+    var confidence: Double
+    var prediction: String
 
     var body: some View {
         NavigationView {
@@ -229,9 +232,8 @@ struct PredictorView: View {
                 }
                 
                 Button(action: {
-                    self.predictor.postJson()
-                    print(self.predictor.getConfidence())
-                    print(self.predictor.getPrediction())
+                    let data = self.predictor.postJson(capShape: self.$selectedCapShape.wrappedValue, capSurface: self.$selectedCapSurface.wrappedValue, capColor: self.$selectedCapColor.wrappedValue, bruises: self.$selectedBruises.wrappedValue, odor: self.$selectedOdor.wrappedValue, gillAttachment: self.$selectedGillAttachment.wrappedValue, gillSpacing: self.$selectedGillSpacing.wrappedValue, gillSize: self.$selectedGillSize.wrappedValue, gillColor: self.$selectedGillColor.wrappedValue, stalkShape: self.$selectedStalkShape.wrappedValue, stalkRoot: self.$selectedStalkRoot.wrappedValue, stalkSurfaceAboveRing: self.$selectedStalkSurfaceAboveRing.wrappedValue, stalkSurfaceBelowRing: self.$selectedStalkSurfaceBelowRing.wrappedValue, stalkColorAboveRing: self.$selectedStalkColorAboveRing.wrappedValue, stalkColorBelowRing: self.$selectedStalkColorBelowRing.wrappedValue, veilType: self.$selectedVeilType.wrappedValue, veilColor: self.$selectedVeilColor.wrappedValue, ringNumber: self.$selectedRingNumber.wrappedValue, ringType: self.$selectedRingType.wrappedValue, sporePrintColor: self.$selectedSporePrintColor.wrappedValue, population: self.$selectedPopulation.wrappedValue, habitat: self.$selectedHabitat.wrappedValue)
+                    print(data)
                 }) {
                     Text("Submit")
                 }
@@ -244,6 +246,6 @@ struct PredictorView: View {
 
 struct PredictorView_Previews: PreviewProvider {
     static var previews: some View {
-        PredictorView(predictor: Predictor(prediction: "", confidence: 0.0))
+        PredictorView(confidence: 0.0, prediction: "")
     }
 }
