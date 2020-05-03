@@ -8,6 +8,35 @@
 
 import SwiftUI
 
+func postJson() {
+    let url = URL(string: "https://mushroom-predictor.azurewebsites.net/predict-mushroom")!
+    
+    var request = URLRequest(url: url)
+    request.httpMethod = "POST"
+    request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+    
+    let json: [String: Any] = ["data": [3,4,1,1,8,3,1,2,1,1,4,4,4,8,8,1,3,2,6,1,4,5]]
+    
+    let jsonData = try? JSONSerialization.data(withJSONObject: json)
+    
+    request.httpBody = jsonData
+    
+    let task = URLSession.shared.dataTask(with: request) { data, response, error in
+        guard let data = data, error == nil else {
+            print(error?.localizedDescription ?? "No data")
+            return
+        }
+        
+        let responseJSON = try? JSONSerialization.jsonObject(with: data, options: [])
+
+        if let responseJSON = responseJSON as? [String: Any] {
+            print(responseJSON)
+        }
+    }
+    
+    task.resume()
+}
+
 struct Predictor: View {
     var capShape: [[String]] = [["", ""], ["Bell", "b"], ["Conical", "c"], ["Convex", "x"], ["Flat", "f"], ["Knobbed", "k"], ["Sunken", "s"]]
     
@@ -226,7 +255,10 @@ struct Predictor: View {
                     }
                 }
                 
-                Button(action: /*@START_MENU_TOKEN@*/{}/*@END_MENU_TOKEN@*/) {
+                Button(action: {
+                    //debugPrint("Hello world!")
+                    postJson()
+                }) {
                     Text("Submit")
                 }
             }
