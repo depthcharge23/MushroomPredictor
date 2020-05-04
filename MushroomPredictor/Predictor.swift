@@ -39,8 +39,6 @@ class Predictor {
             let responseJSON = try? JSONSerialization.jsonObject(with: data, options: [])
 
             if let responseJSON = responseJSON as? [String: Any] {
-                print(responseJSON["prediction"] ?? "Error")
-                print(responseJSON["confidence"] ?? "Error")
                 completionHandler(responseJSON)
             }
         }
