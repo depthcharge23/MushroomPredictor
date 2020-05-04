@@ -10,37 +10,11 @@ import NetworkExtension
 
 class Predictor {
     
-    private func constructRtn(responseJSON: [String: Any]) -> [String: Any] {
-        var rtn: [String: Any] = [:]
-        
-        if let prediction = responseJSON["prediction"] as? Int {
-            if prediction == 1 {
-                rtn["prediction"] = "Poisonous"
-            } else if prediction == 2 {
-                rtn["prediction"] = "Edible"
-            } else {
-                rtn["prediction"] = "Unknown"
-            }
-        } else {
-            rtn["prediction"] = "Unkown"
-        }
-        
-        if let confidence = responseJSON["confidence"] as? Int {
-            rtn["confidence"] = Double(confidence) * 100.0
-        } else {
-            rtn["confidence"] = 0.0
-        }
-        
-        return rtn
-    }
-    
     func postJson(capShape: Int, capSurface: Int, capColor: Int, bruises: Int, odor: Int, gillAttachment: Int,
                   gillSpacing: Int, gillSize: Int, gillColor: Int, stalkShape: Int, stalkRoot: Int,
                   stalkSurfaceAboveRing: Int, stalkSurfaceBelowRing: Int, stalkColorAboveRing: Int,
                   stalkColorBelowRing: Int, veilType: Int, veilColor: Int, ringNumber: Int, ringType: Int,
-                  sporePrintColor: Int, population: Int, habitat: Int) -> [String: Any] {
-        
-        var rtn: [String: Any] = [:]
+                  sporePrintColor: Int, population: Int, habitat: Int, completionHandler: @escaping (_ rtn: [String: Any]) -> ()) {
         
         let json: [String: Any] = ["data": [capShape, capSurface, capColor, bruises, odor, gillAttachment,
                                             gillSpacing, gillSize, gillColor, stalkShape, stalkRoot,
@@ -65,12 +39,12 @@ class Predictor {
             let responseJSON = try? JSONSerialization.jsonObject(with: data, options: [])
 
             if let responseJSON = responseJSON as? [String: Any] {
-                rtn = self.constructRtn(responseJSON: responseJSON)
+                print(responseJSON["prediction"] ?? "Error")
+                print(responseJSON["confidence"] ?? "Error")
+                completionHandler(responseJSON)
             }
         }
         
         task.resume()
-        
-        return rtn
     }
 }

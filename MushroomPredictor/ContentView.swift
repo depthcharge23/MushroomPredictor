@@ -9,16 +9,13 @@
 import SwiftUI
 
 struct ContentView: View {
-    @State var confidence: Double
-    @State var prediction: String
-    
     var body: some View {
-        PredictorView(confidence: confidence, prediction: prediction)
+        PredictorView()
     }
 }
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
-        ContentView(confidence: 0.0, prediction: "")
+        ContentView()
     }
 }

@@ -9,6 +9,7 @@
 import SwiftUI
 
 struct PredictorView: View {
+    
     var capShape: [[String]] = [["", ""], ["Bell", "b"], ["Conical", "c"], ["Convex", "x"], ["Flat", "f"], ["Knobbed", "k"], ["Sunken", "s"]]
     
     var capSurface: [[String]] = [["", ""], ["Fibrous", "f"], ["Grooves", "g"], ["Scaly", "y"], ["Smooth", "s"]]
@@ -76,11 +77,9 @@ struct PredictorView: View {
     @State private var selectedPopulation = 0
     @State private var selectedHabitat = 0
     
-    var predictor: Predictor = Predictor()
+    @State var prediction = ""
+    @State var confidence = 0.0
     
-    var confidence: Double
-    var prediction: String
-
     var body: some View {
         NavigationView {
             Form {
@@ -232,20 +231,36 @@ struct PredictorView: View {
                 }
                 
                 Button(action: {
-                    let data = self.predictor.postJson(capShape: self.$selectedCapShape.wrappedValue, capSurface: self.$selectedCapSurface.wrappedValue, capColor: self.$selectedCapColor.wrappedValue, bruises: self.$selectedBruises.wrappedValue, odor: self.$selectedOdor.wrappedValue, gillAttachment: self.$selectedGillAttachment.wrappedValue, gillSpacing: self.$selectedGillSpacing.wrappedValue, gillSize: self.$selectedGillSize.wrappedValue, gillColor: self.$selectedGillColor.wrappedValue, stalkShape: self.$selectedStalkShape.wrappedValue, stalkRoot: self.$selectedStalkRoot.wrappedValue, stalkSurfaceAboveRing: self.$selectedStalkSurfaceAboveRing.wrappedValue, stalkSurfaceBelowRing: self.$selectedStalkSurfaceBelowRing.wrappedValue, stalkColorAboveRing: self.$selectedStalkColorAboveRing.wrappedValue, stalkColorBelowRing: self.$selectedStalkColorBelowRing.wrappedValue, veilType: self.$selectedVeilType.wrappedValue, veilColor: self.$selectedVeilColor.wrappedValue, ringNumber: self.$selectedRingNumber.wrappedValue, ringType: self.$selectedRingType.wrappedValue, sporePrintColor: self.$selectedSporePrintColor.wrappedValue, population: self.$selectedPopulation.wrappedValue, habitat: self.$selectedHabitat.wrappedValue)
-                    print(data)
+                    let predictor = Predictor()
+                    
+                    predictor.postJson(capShape: self.$selectedCapShape.wrappedValue, capSurface: self.$selectedCapSurface.wrappedValue, capColor: self.$selectedCapColor.wrappedValue, bruises: self.$selectedBruises.wrappedValue, odor: self.$selectedOdor.wrappedValue, gillAttachment: self.$selectedGillAttachment.wrappedValue, gillSpacing: self.$selectedGillSpacing.wrappedValue, gillSize: self.$selectedGillSize.wrappedValue, gillColor: self.$selectedGillColor.wrappedValue, stalkShape: self.$selectedStalkShape.wrappedValue, stalkRoot: self.$selectedStalkRoot.wrappedValue, stalkSurfaceAboveRing: self.$selectedStalkSurfaceAboveRing.wrappedValue, stalkSurfaceBelowRing: self.$selectedStalkSurfaceBelowRing.wrappedValue, stalkColorAboveRing: self.$selectedStalkColorAboveRing.wrappedValue, stalkColorBelowRing: self.$selectedStalkColorBelowRing.wrappedValue, veilType: self.$selectedVeilType.wrappedValue, veilColor: self.$selectedVeilColor.wrappedValue, ringNumber: self.$selectedRingNumber.wrappedValue, ringType: self.$selectedRingType.wrappedValue, sporePrintColor: self.$selectedSporePrintColor.wrappedValue, population: self.$selectedPopulation.wrappedValue, habitat: self.$selectedHabitat.wrappedValue) { result in
+                        
+                       if let prediction = result["prediction"] as? Int {
+                            if prediction == 1 {
+                                self.prediction = "Poisonous"
+                            } else if prediction == 2 {
+                                self.prediction = "Edible"
+                            } else {
+                                self.prediction = "Unknown"
+                            }
+                        } else {
+                            self.prediction = "Unkown"
+                        }
+                        
+                        if let confidence = result["confidence"] as? Int {
+                            self.confidence = Double(confidence) * 100.0
+                        } else {
+                            self.confidence = 0.0
+                        }
+                    }
                 }) {
                     Text("Submit")
                 }
+                
+                MushroomResultView(prediction: prediction, confidence: confidence)
             }
             .padding()
             .navigationBarTitle("Mushroom Predictor")
         }
-    }
-}
-
-struct PredictorView_Previews: PreviewProvider {
-    static var previews: some View {
-        PredictorView(confidence: 0.0, prediction: "")
     }
 }
