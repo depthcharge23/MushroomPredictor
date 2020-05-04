@@ -87,7 +87,7 @@ struct PredictorView: View {
                     Text("The more information you fill out, the more accurate the prediction will be...")
                         .font(.subheadline)
                     
-                    Section(header: Text("Cap Style")) {
+                    Section(header: Text("CAP STYLE").font(.headline)) {
                         Picker(selection: $selectedCapShape, label: Text("Cap Shape")) {
                             ForEach(0 ..< capShape.count) {
                                 Text(self.capShape[$0][0]).tag($0)
@@ -273,9 +273,10 @@ struct PredictorView: View {
                     }) {
                         Text("Close")
                             .padding()
+                            .foregroundColor(Color.red)
                             .overlay(
                                 RoundedRectangle(cornerRadius: 20)
-                                    .stroke(Color.blue, lineWidth: 3)
+                                    .stroke(Color.red, lineWidth: 3)
                             )
                     }
                     .padding(.bottom, 10)
