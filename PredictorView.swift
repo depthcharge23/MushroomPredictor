@@ -272,9 +272,19 @@ struct PredictorView: View {
                         self.confidence = -1.0
                     }) {
                         Text("Close")
+                            .padding()
+                            .overlay(
+                                RoundedRectangle(cornerRadius: 20)
+                                    .stroke(Color.blue, lineWidth: 3)
+                            )
                     }
+                    .padding(.bottom, 10)
                 }
-                .background(Color.red)
+                .background(Color.white)
+                .overlay(
+                    RoundedRectangle(cornerRadius: 20)
+                        .stroke(Color.black, lineWidth: 1)
+                )
             }
         }
     }
