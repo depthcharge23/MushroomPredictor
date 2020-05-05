@@ -10,256 +10,289 @@ import SwiftUI
 
 struct PredictorView: View {
     
-    var capShape: [[String]] = [["", ""], ["Bell", "b"], ["Conical", "c"], ["Convex", "x"], ["Flat", "f"], ["Knobbed", "k"], ["Sunken", "s"]]
+    var capShape: [String] = ["Unknown", "Bell", "Conical", "Convex", "Flat", "Knobbed", "Sunken"]
     
-    var capSurface: [[String]] = [["", ""], ["Fibrous", "f"], ["Grooves", "g"], ["Scaly", "y"], ["Smooth", "s"]]
+    var capSurface: [String] = ["Unknown", "Fibrous", "Grooves", "Scaly", "Smooth"]
     
-    var capColor: [[String]] = [["", ""], ["Brown", "n"], ["Buff", "b"], ["Cinnamon", "c"], ["Gray", "g"], ["Green", "r"], ["Pink", "p"], ["Purple", "u"], ["Red", "e"], ["White", "w"], ["Yellow", "y"]]
+    var capColor: [String] = ["Unknown", "Brown", "Buff", "Cinnamon", "Gray", "Green", "Pink", "Purple", "Red", "White", "Yellow"]
     
-    var bruises: [[String]] = [["Yes", "t"], ["No", "F"]]
+    var bruises: [String] = ["Unknown", "Yes", "No"]
     
-    var odor: [[String]] = [["", ""], ["Almond", "a"], ["Anise", "l"], ["Creosote", "c"], ["Fishy", "y"], ["Foul", "f"], ["Musty", "m"], ["Pungent", "p"], ["Spicy", "s"], ["None", "n"]]
+    var odor: [String] = ["Unknown", "Almond", "Anise", "Creosote", "Fishy", "Foul", "Musty", "Pungent", "Spicy", "None"]
     
-    var gillAttachment: [[String]] = [["", ""], ["Attached", "a"], ["Descending", "d"], ["Free", "f"], ["Notched", "n"]]
+    var gillAttachment: [String] = ["Unknown", "Attached", "Descending", "Free", "Notched"]
     
-    var gillSpacing: [[String]] = [["", ""], ["Close", "c"], ["Crowded", "w"], ["Distant", "d"]]
+    var gillSpacing: [String] = ["Unknown", "Close", "Crowded", "Distant"]
     
-    var gillSize: [[String]] = [["", ""], ["Broad", "b"], ["Narrow", "n"]]
+    var gillSize: [String] = ["Unknown", "Broad", "Narrow"]
     
-    var gillColor: [[String]] = [["", ""], ["Black", "k"], ["Brown", "n"], ["Buff", "b"], ["Chocolate", "h"], ["Gray", "g"], ["Green", "r"], ["Orange", "o"], ["Pink", "p"], ["Purple", "u"], ["Red", "e"], ["White", "w"], ["Yellow", "y"]]
+    var gillColor: [String] = ["Unknown", "Black", "Brown", "Buff", "Chocolate", "Gray", "Green", "Orange", "Pink", "Purple", "Red", "White", "Yellow"]
     
-    var stalkShape: [[String]] = [["", ""], ["Enlarging", "e"], ["Tapering", "t"]]
+    var stalkShape: [String] = ["Unknown", "Enlarging", "Tapering"]
     
-    var stalkRoot: [[String]] = [["", ""], ["Bulbous", "b"], ["Club", "c"], ["Cup", "u"], ["Equal", "e"], ["Rhizomorphs", "z"], ["Rooted", "r"], ["Missing", "?"]]
+    var stalkRoot: [String] = ["Unknown", "Bulbous", "Club", "Cup", "Equal", "Rhizomorphs", "Rooted", "Missing"]
     
-    var stalkSurfaceAboveRing: [[String]] = [["", ""], ["Fibrous", "f"], ["Scaly", "y"], ["Silky", "k"], ["Smooth", "s"]]
+    var stalkSurfaceAboveRing: [String] = ["Unknown", "Fibrous", "Scaly", "Silky", "Smooth"]
     
-    var stalkSurfaceBelowRing: [[String]] = [["", ""], ["Fibrous", "f"], ["Scaly", "y"], ["Silky", "k"], ["Smooth", "s"]]
+    var stalkSurfaceBelowRing: [String] = ["Unknown", "Fibrous", "Scaly", "Silky", "Smooth"]
     
-    var stalkColorAboveRing: [[String]] = [["", ""], ["Brown", "n"], ["Buff", "b"], ["Cinnamon", "c"], ["Gray", "g"], ["Orange", "o"], ["Pink", "p"], ["Red", "e"], ["White", "w"], ["Yellow", "y"]]
+    var stalkColorAboveRing: [String] = ["Unknown", "Brown", "Buff", "Cinnamon", "Gray", "Orange", "Pink", "Red", "White", "Yellow"]
     
-    var stalkColorBelowRing: [[String]] = [["", ""], ["Brown", "n"], ["Buff", "b"], ["Cinnamon", "c"], ["Gray", "g"], ["Orange", "o"], ["Pink", "p"], ["Red", "e"], ["White", "w"], ["Yellow", "y"]]
+    var stalkColorBelowRing: [String] = ["Unknown", "Brown", "Buff", "Cinnamon", "Gray", "Orange", "Pink", "Red", "White", "Yellow"]
     
-    var veilType: [[String]] = [["", ""], ["Partial", "p"], ["Universal","u"]]
+    var veilType: [String] = ["Unknown", "Partial", "Universal"]
     
-    var veilColor: [[String]] = [["", ""], ["Brown", "n"], ["Orange", "o"], ["White", "w"], ["Yellow", "y"]]
+    var veilColor: [String] = ["Unknown", "Brown", "Orange", "White", "Yellow"]
     
-    var ringNumber: [[String]] = [["", ""], ["One", "o"], ["Two", "t"], ["None", "n"]]
+    var ringNumber: [String] = ["Unknown", "One", "Two", "None"]
     
-    var ringType: [[String]] = [["", ""], ["Cobwebby", "c"], ["Evanescent", "e"], ["Flaring", "f"], ["Large", "l"], ["Pendant", "p"], ["Sheathing", "s"], ["Zone", "z"], ["None", "n"]]
+    var ringType: [String] = ["Unknown", "Cobwebby", "Evanescent", "Flaring", "Large", "Pendant", "Sheathing", "Zone", "None"]
     
-    var sporePrintColor: [[String]] = [["", ""], ["Black", "k"], ["Brown", "n"], ["Buff", "b"], ["Chocolate", "h"], ["Green", "e"], ["Orange", "o"], ["Purple", "u"], ["White", "w"], ["Yellow", "y"]]
+    var sporePrintColor: [String] = ["Unknown", "Black", "Brown", "Buff", "Chocolate", "Green", "Orange", "Purple", "White", "Yellow"]
     
-    var population: [[String]] = [["", ""], ["Abundant", "a"], ["Clustered", "c"], ["Numerous", "n"], ["Scattered", "s"], ["Several", "v"], ["Solitary", "y"]]
+    var population: [String] = ["Unknown", "Abundant", "Clustered", "Numerous", "Scattered", "Several", "Solitary"]
     
-    var habitat: [[String]] = [["", ""], ["Grasses", "g"], ["Leaves", "l"], ["Meadows", "m"], ["Paths", "p"], ["Urban", "u"], ["Waste", "w"], ["Woods", "d"]]
+    var habitat: [String] = ["Unknown", "Grasses", "Leaves", "Meadows", "Paths", "Urban", "Waste", "Woods"]
     
-    @State private var selectedCapShape = 0
-    @State private var selectedCapSurface = 0
-    @State private var selectedCapColor = 0
-    @State private var selectedBruises = 0
-    @State private var selectedOdor = 0
-    @State private var selectedGillAttachment = 0
-    @State private var selectedGillSpacing = 0
-    @State private var selectedGillSize = 0
-    @State private var selectedGillColor = 0
-    @State private var selectedStalkShape = 0
-    @State private var selectedStalkRoot = 0
-    @State private var selectedStalkSurfaceAboveRing = 0
-    @State private var selectedStalkSurfaceBelowRing = 0
-    @State private var selectedStalkColorAboveRing = 0
-    @State private var selectedStalkColorBelowRing = 0
-    @State private var selectedVeilType = 0
-    @State private var selectedVeilColor = 0
-    @State private var selectedRingNumber = 0
-    @State private var selectedRingType = 0
-    @State private var selectedSporePrintColor = 0
-    @State private var selectedPopulation = 0
-    @State private var selectedHabitat = 0
+    @State private var selectedCapShape: Int = 0
+    @State private var selectedCapSurface: Int = 0
+    @State private var selectedCapColor: Int = 0
+    @State private var selectedBruises: Int = 0
+    @State private var selectedOdor: Int = 0
+    @State private var selectedGillAttachment: Int = 0
+    @State private var selectedGillSpacing: Int = 0
+    @State private var selectedGillSize: Int = 0
+    @State private var selectedGillColor: Int = 0
+    @State private var selectedStalkShape: Int = 0
+    @State private var selectedStalkRoot: Int = 0
+    @State private var selectedStalkSurfaceAboveRing: Int = 0
+    @State private var selectedStalkSurfaceBelowRing: Int = 0
+    @State private var selectedStalkColorAboveRing: Int = 0
+    @State private var selectedStalkColorBelowRing: Int = 0
+    @State private var selectedVeilType: Int = 0
+    @State private var selectedVeilColor: Int = 0
+    @State private var selectedRingNumber: Int = 0
+    @State private var selectedRingType: Int = 0
+    @State private var selectedSporePrintColor: Int = 0
+    @State private var selectedPopulation: Int = 0
+    @State private var selectedHabitat: Int = 0
     
     @State var prediction = ""
     @State var confidence = 0.0
     
     var body: some View {
         ZStack {
-            NavigationView {
-                Form {
-                    Text("The more information you fill out, the more accurate the prediction will be...")
-                        .font(.subheadline)
-                    
-                    Section(header: Text("CAP STYLE").font(.headline)) {
-                        Picker(selection: $selectedCapShape, label: Text("Cap Shape")) {
-                            ForEach(0 ..< capShape.count) {
-                                Text(self.capShape[$0][0]).tag($0)
-                            }
-                        }
-                        
-                        Picker(selection: $selectedCapSurface, label: Text("Cap Surface")) {
-                            ForEach(0 ..< capSurface.count) {
-                                Text(self.capSurface[$0][0]).tag($0)
-                            }
-                        }
-                        
-                        Picker(selection: $selectedCapColor, label: Text("Cap Color")) {
-                            ForEach(0 ..< capColor.count) {
-                                Text(self.capColor[$0][0]).tag($0)
-                            }
-                        }
-                    }
-                    
-                    Section(header: Text("Gill Style")) {
-                        Picker(selection: $selectedGillAttachment, label: Text("Gill Attachment")) {
-                            ForEach(0 ..< gillAttachment.count) {
-                                Text(self.gillAttachment[$0][0]).tag($0)
-                            }
-                        }
-                        
-                        Picker(selection: $selectedGillSpacing, label: Text("Gill Spacing")) {
-                            ForEach(0 ..< gillSpacing.count) {
-                                Text(self.gillSpacing[$0][0]).tag($0)
-                            }
-                        }
-                        
-                        Picker(selection: $selectedGillSize, label: Text("Gill Size")) {
-                            ForEach(0 ..< gillSize.count) {
-                                Text(self.gillSize[$0][0]).tag($0)
-                            }
-                        }
-                        
-                        Picker(selection: $selectedGillColor, label: Text("Gill Color")) {
-                            ForEach(0 ..< gillColor.count) {
-                                Text(self.gillColor[$0][0]).tag($0)
-                            }
-                        }
-                    }
-                    
-                    Section(header: Text("Stalk Style")) {
-                        Picker(selection: $selectedStalkShape, label: Text("Stalk Shape")) {
-                            ForEach(0 ..< stalkShape.count) {
-                                Text(self.stalkShape[$0][0]).tag($0)
-                            }
-                        }
-                        
-                        Picker(selection: $selectedStalkRoot, label: Text("Stalk Root")) {
-                            ForEach(0 ..< stalkRoot.count) {
-                                Text(self.stalkRoot[$0][0]).tag($0)
-                            }
-                        }
-                        
-                        Picker(selection: $selectedStalkSurfaceAboveRing, label: Text("Stalk Surface Above Ring")) {
-                            ForEach(0 ..< stalkSurfaceAboveRing.count) {
-                                Text(self.stalkSurfaceAboveRing[$0][0]).tag($0)
-                            }
-                        }
-                        
-                        Picker(selection: $selectedStalkSurfaceBelowRing, label: Text("Stalk Surface Below Ring")) {
-                            ForEach(0 ..< stalkSurfaceBelowRing.count) {
-                                Text(self.stalkSurfaceBelowRing[$0][0]).tag($0)
-                            }
-                        }
-                        
-                        Picker(selection: $selectedStalkColorAboveRing, label: Text("Stalk Color Above Ring")) {
-                            ForEach(0 ..< stalkColorAboveRing.count) {
-                                Text(self.stalkColorAboveRing[$0][0]).tag($0)
-                            }
-                        }
-                        
-                        Picker(selection: $selectedStalkColorBelowRing, label: Text("Stalk Color Below Ring")) {
-                            ForEach(0 ..< stalkColorBelowRing.count) {
-                                Text(self.stalkColorBelowRing[$0][0]).tag($0)
-                            }
-                        }
-                    }
-                    
-                    Section(header: Text("Veil Style")) {
-                        Picker(selection: $selectedVeilType, label: Text("Veil Type")) {
-                            ForEach(0 ..< veilType.count) {
-                                Text(self.veilType[$0][0]).tag($0)
-                            }
-                        }
-                        
-                        Picker(selection: $selectedVeilColor, label: Text("Veil Color")) {
-                            ForEach(0 ..< veilColor.count) {
-                                Text(self.veilColor[$0][0]).tag($0)
-                            }
-                        }
-                    }
-                    
-                    Section(header: Text("Ring Style")) {
-                        Picker(selection: $selectedRingNumber, label: Text("Ring Number")) {
-                            ForEach(0 ..< ringNumber.count) {
-                                Text(self.ringNumber[$0][0]).tag($0)
-                            }
-                        }
-                        
-                        Picker(selection: $selectedRingType, label: Text("Ring Type")) {
-                            ForEach(0 ..< ringType.count) {
-                                Text(self.ringType[$0][0]).tag($0)
-                            }
-                        }
-                    }
-                    
-                    Section(header: Text("Miscellaneous")) {
-                        Picker(selection: $selectedBruises, label: Text("Bruises")) {
-                            ForEach(0 ..< bruises.count) {
-                                Text(self.bruises[$0][0]).tag($0)
-                            }
-                        }
-                        
-                        Picker(selection: $selectedOdor, label: Text("Odor")) {
-                            ForEach(0 ..< odor.count) {
-                                Text(self.odor[$0][0]).tag($0)
-                            }
-                        }
-                        
-                        Picker(selection: $selectedSporePrintColor, label: Text("Spore Print Color")) {
-                            ForEach(0 ..< sporePrintColor.count) {
-                                Text(self.sporePrintColor[$0][0]).tag($0)
-                            }
-                        }
-                        
-                        Picker(selection: $selectedPopulation, label: Text("Population")) {
-                            ForEach(0 ..< population.count) {
-                                Text(self.population[$0][0]).tag($0)
-                            }
-                        }
-                        
-                        Picker(selection: $selectedHabitat, label: Text("Habitat")) {
-                            ForEach(0 ..< habitat.count) {
-                                Text(self.habitat[$0][0]).tag($0)
-                            }
-                        }
-                    }
-                    
-                    Button(action: {
-                        let predictor = Predictor()
-                        
-                        predictor.postJson(capShape: self.$selectedCapShape.wrappedValue, capSurface: self.$selectedCapSurface.wrappedValue, capColor: self.$selectedCapColor.wrappedValue, bruises: self.$selectedBruises.wrappedValue, odor: self.$selectedOdor.wrappedValue, gillAttachment: self.$selectedGillAttachment.wrappedValue, gillSpacing: self.$selectedGillSpacing.wrappedValue, gillSize: self.$selectedGillSize.wrappedValue, gillColor: self.$selectedGillColor.wrappedValue, stalkShape: self.$selectedStalkShape.wrappedValue, stalkRoot: self.$selectedStalkRoot.wrappedValue, stalkSurfaceAboveRing: self.$selectedStalkSurfaceAboveRing.wrappedValue, stalkSurfaceBelowRing: self.$selectedStalkSurfaceBelowRing.wrappedValue, stalkColorAboveRing: self.$selectedStalkColorAboveRing.wrappedValue, stalkColorBelowRing: self.$selectedStalkColorBelowRing.wrappedValue, veilType: self.$selectedVeilType.wrappedValue, veilColor: self.$selectedVeilColor.wrappedValue, ringNumber: self.$selectedRingNumber.wrappedValue, ringType: self.$selectedRingType.wrappedValue, sporePrintColor: self.$selectedSporePrintColor.wrappedValue, population: self.$selectedPopulation.wrappedValue, habitat: self.$selectedHabitat.wrappedValue) { result in
+            VStack {
+                Text("Mushroom Predictor")
+                    .font(.largeTitle)
+                    .padding()
+                
+                Text("The more information you fill out, the more accurate the prediction will be...")
+                    .font(.subheadline)
+                
+                GeometryReader { geometry in
+                    ScrollView {
+                        VStack(alignment: .leading) {
+                            Group {
+                                VStack(alignment: .leading) {
+                                    Text("Cap Style")
+                                        .font(.title)
+                                    
+                                    DropDownMenu(label: "Cap Shape", menuVals: self.capShape, alignment: .leading, callback: {
+                                        selected in
+                                        self.selectedCapShape = self.capShape.firstIndex(of: selected) ?? 0
+                                    }, selected: self.capShape[self.selectedCapShape])
+                                    
+                                    DropDownMenu(label: "Cap Surface", menuVals: self.capSurface, alignment: .leading, callback: {
+                                        selected in
+                                        self.selectedCapSurface = self.capSurface.firstIndex(of: selected) ?? 0
+                                    }, selected: self.capSurface[self.selectedCapSurface])
+                                    
+                                    DropDownMenu(label: "Cap Color", menuVals: self.capColor, alignment: .leading, callback: {
+                                        selected in
+                                        self.selectedCapColor = self.capColor.firstIndex(of: selected) ?? 0
+                                    }, selected: self.capColor[self.selectedCapColor])
+                                } // End Cap VStack
+                            } // End Cap Group
+                            .padding(.bottom)
                             
-                           if let prediction = result["prediction"] as? Int {
-                                if prediction == 1 {
-                                    self.prediction = "Poisonous"
-                                } else if prediction == 2 {
-                                    self.prediction = "Edible"
-                                } else {
-                                    self.prediction = "Unknown"
-                                }
-                            } else {
-                                self.prediction = "Unkown"
-                            }
+                            Group {
+                                VStack(alignment: .leading) {
+                                    Text("Gill Style")
+                                        .font(.title)
+                                    
+                                    DropDownMenu(label: "Gill Attachment", menuVals: self.gillAttachment, alignment: .leading, callback: {
+                                        selected in
+                                        self.selectedGillAttachment = self.gillAttachment.firstIndex(of: selected) ?? 0
+                                    }, selected: self.gillAttachment[self.selectedGillAttachment])
+                                    
+                                    DropDownMenu(label: "Gill Spacing", menuVals: self.gillSpacing, alignment: .leading, callback: {
+                                        selected in
+                                        self.selectedGillSpacing = self.gillSpacing.firstIndex(of: selected) ?? 0
+                                    }, selected: self.gillSpacing[self.selectedGillSpacing])
+                                    
+                                    DropDownMenu(label: "Gill Size", menuVals: self.gillSize, alignment: .leading, callback: {
+                                        selected in
+                                        self.selectedGillSize = self.gillSize.firstIndex(of: selected) ?? 0
+                                    }, selected: self.gillSize[self.selectedGillSize])
+                                    
+                                    DropDownMenu(label: "Gill Color", menuVals: self.gillColor, alignment: .leading, callback: {
+                                        selected in
+                                        self.selectedGillColor = self.gillColor.firstIndex(of: selected) ?? 0
+                                    }, selected: self.gillColor[self.selectedGillColor])
+                                } // End Gill VStack
+                            } // End Gill Group
+                            .padding(.bottom)
                             
-                            if let confidence = result["confidence"] as? Int {
-                                self.confidence = Double(confidence) * 100.0
-                            } else {
-                                self.confidence = 0.0
-                            }
-                        }
-                    }) {
-                        Text("Submit")
-                    }
-                }
+                            Group {
+                                VStack(alignment: .leading) {
+                                    Text("Stalk Style")
+                                        .font(.title)
+                                    
+                                    DropDownMenu(label: "Stalk Shape", menuVals: self.stalkShape, alignment: .leading, callback: {
+                                        selected in
+                                        self.selectedStalkShape = self.stalkShape.firstIndex(of: selected) ?? 0
+                                    }, selected: self.stalkShape[self.selectedStalkShape])
+                                    
+                                    DropDownMenu(label: "Stalk Root", menuVals: self.stalkRoot, alignment: .leading, callback: {
+                                        selected in
+                                        self.selectedStalkRoot = self.stalkRoot.firstIndex(of: selected) ?? 0
+                                    }, selected: self.stalkRoot[self.selectedStalkRoot])
+                                    
+                                    DropDownMenu(label: "Stalk Surface Above Ring", menuVals: self.stalkSurfaceAboveRing, alignment: .leading, callback: {
+                                        selected in
+                                        self.selectedStalkSurfaceAboveRing = self.stalkSurfaceAboveRing.firstIndex(of: selected) ?? 0
+                                    }, selected: self.stalkSurfaceAboveRing[self.selectedStalkSurfaceAboveRing])
+                                    
+                                    DropDownMenu(label: "Stalk Surface Bellow Ring", menuVals: self.stalkSurfaceBelowRing, alignment: .leading, callback: {
+                                        selected in
+                                        self.selectedStalkSurfaceBelowRing = self.stalkSurfaceBelowRing.firstIndex(of: selected) ?? 0
+                                    }, selected:  self.stalkSurfaceBelowRing[self.selectedStalkSurfaceBelowRing])
+                                    
+                                    DropDownMenu(label: "Stalk Color Above Ring", menuVals: self.stalkColorAboveRing, alignment: .leading, callback: {
+                                        selected in
+                                        self.selectedStalkColorAboveRing = self.stalkColorAboveRing.firstIndex(of: selected) ?? 0
+                                    }, selected: self.stalkColorAboveRing[self.selectedStalkColorAboveRing])
+                                    
+                                    DropDownMenu(label: "Stalk Color Below Ring", menuVals: self.stalkColorBelowRing, alignment: .leading, callback: {
+                                        selected in
+                                        self.selectedStalkColorBelowRing = self.stalkColorBelowRing.firstIndex(of: selected) ?? 0
+                                    }, selected: self.stalkColorBelowRing[self.selectedStalkColorBelowRing])
+                                } // End Stalk VStack
+                            } // End Stalk Group
+                            .padding(.bottom)
+                            
+                            Group {
+                                VStack(alignment: .leading) {
+                                    Text("Veil Style")
+                                        .font(.title)
+                                    
+                                    DropDownMenu(label: "Veil Type ", menuVals: self.veilType, alignment: .leading, callback: {
+                                        selected in
+                                        self.selectedVeilType = self.veilType.firstIndex(of: selected) ?? 0
+                                    }, selected: self.veilType[self.selectedVeilType])
+                                    
+                                    DropDownMenu(label: "Veil Color", menuVals: self.veilColor, alignment: .leading, callback: {
+                                        selected in
+                                        self.selectedVeilColor = self.veilColor.firstIndex(of: selected) ?? 0
+                                    }, selected: self.veilColor[self.selectedVeilColor])
+                                } // End Veil VStack
+                            } // End Veil Group
+                            .padding(.bottom)
+                            
+                            Group {
+                                VStack(alignment: .leading) {
+                                    Text("Ring Style")
+                                        .font(.title)
+                                    
+                                    DropDownMenu(label: "Ring Number", menuVals: self.ringNumber, alignment: .leading, callback: {
+                                        selected in
+                                        self.selectedRingNumber = self.ringNumber.firstIndex(of: selected) ?? 0
+                                    }, selected: self.ringNumber[self.selectedRingNumber])
+                                    
+                                    DropDownMenu(label: "Ring Type", menuVals: self.ringType, alignment: .leading, callback: {
+                                        selected in
+                                        self.selectedRingType = self.ringType.firstIndex(of: selected) ?? 0
+                                    }, selected: self.ringType[self.selectedRingType])
+                                } // End Ring VStack
+                            } // End Ring Group
+                            .padding(.bottom)
+                            
+                            Group {
+                                VStack(alignment: .leading) {
+                                    Text("Misc")
+                                        .font(.title)
+                                    
+                                    DropDownMenu(label: "Bruises", menuVals: self.bruises, alignment: .leading, callback: {
+                                        selected in
+                                        self.selectedBruises = self.bruises.firstIndex(of: selected) ?? 0
+                                    }, selected: self.bruises[self.selectedBruises])
+                                    
+                                    DropDownMenu(label: "Odor", menuVals: self.odor, alignment: .leading, callback: {
+                                        selected in
+                                        self.selectedOdor = self.odor.firstIndex(of: selected) ?? 0
+                                    }, selected: self.bruises[self.selectedBruises])
+                                    
+                                    DropDownMenu(label: "Spore Print Color", menuVals: self.sporePrintColor, alignment: .leading, callback: {
+                                        selected in
+                                        self.selectedSporePrintColor = self.sporePrintColor.firstIndex(of: selected) ?? 0
+                                    }, selected: self.sporePrintColor[self.selectedSporePrintColor])
+                                    
+                                    DropDownMenu(label: "Population", menuVals: self.population, alignment: .leading, callback: {
+                                        selected in
+                                        self.selectedPopulation = self.population.firstIndex(of: selected) ?? 0
+                                    }, selected: self.population[self.selectedPopulation])
+                                    
+                                    DropDownMenu(label: "Habitat", menuVals: self.habitat, alignment: .leading, callback: {
+                                        selected in
+                                        self.selectedHabitat = self.habitat.firstIndex(of: selected) ?? 0
+                                    }, selected: self.habitat[self.selectedHabitat])
+                                } // End Misc VStack
+                            } // End Misc Group
+                            .padding(.bottom)
+                        } // End Scroll VStack
+                    } // End Scroll View
+                    .frame(width: geometry.size.width)
+                } // End Geometry Reader
                 .padding()
-                .navigationBarTitle("Mushroom Predictor")
+                .overlay(
+                    Rectangle()
+                        .stroke(Color.black, lineWidth: 1)
+                )
+                
+                Button(action: {
+                    let predictor = Predictor()
+                    
+                    predictor.postJson(capShape: self.$selectedCapShape.wrappedValue, capSurface: self.$selectedCapSurface.wrappedValue, capColor: self.$selectedCapColor.wrappedValue, bruises: self.$selectedBruises.wrappedValue, odor: self.$selectedOdor.wrappedValue, gillAttachment: self.$selectedGillAttachment.wrappedValue, gillSpacing: self.$selectedGillSpacing.wrappedValue, gillSize: self.$selectedGillSize.wrappedValue, gillColor: self.$selectedGillColor.wrappedValue, stalkShape: self.$selectedStalkShape.wrappedValue, stalkRoot: self.$selectedStalkRoot.wrappedValue, stalkSurfaceAboveRing: self.$selectedStalkSurfaceAboveRing.wrappedValue, stalkSurfaceBelowRing: self.$selectedStalkSurfaceBelowRing.wrappedValue, stalkColorAboveRing: self.$selectedStalkColorAboveRing.wrappedValue, stalkColorBelowRing: self.$selectedStalkColorBelowRing.wrappedValue, veilType: self.$selectedVeilType.wrappedValue, veilColor: self.$selectedVeilColor.wrappedValue, ringNumber: self.$selectedRingNumber.wrappedValue, ringType: self.$selectedRingType.wrappedValue, sporePrintColor: self.$selectedSporePrintColor.wrappedValue, population: self.$selectedPopulation.wrappedValue, habitat: self.$selectedHabitat.wrappedValue) { result in
+                        
+                       if let prediction = result["prediction"] as? Int {
+                            if prediction == 1 {
+                                self.prediction = "Poisonous"
+                            } else if prediction == 2 {
+                                self.prediction = "Edible"
+                            } else {
+                                self.prediction = "Unknown"
+                            }
+                        } else {
+                            self.prediction = "Unkown"
+                        }
+                        
+                        if let confidence = result["confidence"] as? Int {
+                            self.confidence = Double(confidence) * 100.0
+                        } else {
+                            self.confidence = 0.0
+                        }
+                    }
+                }) {
+                    Text("Submit")
+                        .foregroundColor(Color.green)
+                        .padding()
+                        .overlay(
+                            RoundedRectangle(cornerRadius: 20)
+                                .stroke(Color.green, lineWidth: 3)
+                        )
+                }
+                .padding(.top)
             }
             
             if (self.prediction != "" && self.confidence != -1.0) {
@@ -293,6 +326,6 @@ struct PredictorView: View {
 
 struct PredictorView_Previews: PreviewProvider {
     static var previews: some View {
-        PredictorView(prediction: "", confidence: -1.0)
+        PredictorView()
     }
 }
