@@ -80,15 +80,13 @@ struct PredictorView: View {
     @State var prediction = ""
     @State var confidence = 0.0
     
+    @State var validationError = false
+    
     var body: some View {
         ZStack {
             VStack {
                 Text("Mushroom Predictor")
                     .font(.largeTitle)
-                    .padding()
-                
-                Text("The more information you fill out, the more accurate the prediction will be...")
-                    .font(.subheadline)
                 
                 GeometryReader { geometry in
                     ScrollView {
@@ -261,27 +259,121 @@ struct PredictorView: View {
                 )
                 
                 Button(action: {
-                    let predictor = Predictor()
+                    var flag: Bool = true
                     
-                    predictor.postJson(capShape: self.$selectedCapShape.wrappedValue, capSurface: self.$selectedCapSurface.wrappedValue, capColor: self.$selectedCapColor.wrappedValue, bruises: self.$selectedBruises.wrappedValue, odor: self.$selectedOdor.wrappedValue, gillAttachment: self.$selectedGillAttachment.wrappedValue, gillSpacing: self.$selectedGillSpacing.wrappedValue, gillSize: self.$selectedGillSize.wrappedValue, gillColor: self.$selectedGillColor.wrappedValue, stalkShape: self.$selectedStalkShape.wrappedValue, stalkRoot: self.$selectedStalkRoot.wrappedValue, stalkSurfaceAboveRing: self.$selectedStalkSurfaceAboveRing.wrappedValue, stalkSurfaceBelowRing: self.$selectedStalkSurfaceBelowRing.wrappedValue, stalkColorAboveRing: self.$selectedStalkColorAboveRing.wrappedValue, stalkColorBelowRing: self.$selectedStalkColorBelowRing.wrappedValue, veilType: self.$selectedVeilType.wrappedValue, veilColor: self.$selectedVeilColor.wrappedValue, ringNumber: self.$selectedRingNumber.wrappedValue, ringType: self.$selectedRingType.wrappedValue, sporePrintColor: self.$selectedSporePrintColor.wrappedValue, population: self.$selectedPopulation.wrappedValue, habitat: self.$selectedHabitat.wrappedValue) { result in
+                    if self.$selectedCapShape.wrappedValue == 0 {
+                        flag = false
+                    }
+                    
+                    if self.$selectedCapSurface.wrappedValue == 0 {
+                        flag = false
+                    }
+                    
+                    if self.$selectedCapColor.wrappedValue == 0 {
+                        flag = false
+                    }
+                    
+                    if self.$selectedGillAttachment.wrappedValue == 0 {
+                        flag = false
+                    }
+                    
+                    if self.$selectedGillSpacing.wrappedValue == 0 {
+                        flag = false
+                    }
+                    
+                    if self.$selectedGillSize.wrappedValue == 0 {
+                        flag = false
+                    }
+                    
+                    if self.$selectedGillColor.wrappedValue == 0 {
+                        flag = false
+                    }
+                    
+                    if self.$selectedStalkShape.wrappedValue == 0 {
+                        flag = false
+                    }
+                    
+                    if self.$selectedStalkRoot.wrappedValue == 0 {
+                        flag = false
+                    }
+                    
+                    if self.$selectedStalkColorAboveRing.wrappedValue == 0 {
+                        flag = false
+                    }
+                    
+                    if self.$selectedStalkColorBelowRing.wrappedValue == 0 {
+                        flag = false
+                    }
+                    
+                    if self.$selectedStalkSurfaceAboveRing.wrappedValue == 0 {
+                        flag = false
+                    }
+                    
+                    if self.$selectedStalkSurfaceBelowRing.wrappedValue == 0 {
+                        flag = false
+                    }
+                    
+                    if self.$selectedVeilType.wrappedValue == 0 {
+                        flag = false
+                    }
+                    
+                    if self.$selectedVeilColor.wrappedValue == 0 {
+                        flag = false
+                    }
+                    
+                    if self.$selectedRingType.wrappedValue == 0 {
+                        flag = false
+                    }
+                    
+                    if self.$selectedRingNumber.wrappedValue == 0 {
+                        flag = false
+                    }
+                    
+                    if self.$selectedBruises.wrappedValue == 0 {
+                        flag = false
+                    }
+                    
+                    if self.$selectedOdor.wrappedValue == 0 {
+                        flag = false
+                    }
+                    
+                    if self.$selectedSporePrintColor.wrappedValue == 0 {
+                        flag = false
+                    }
+                    
+                    if self.$selectedPopulation.wrappedValue == 0 {
+                        flag = false
+                    }
+                    
+                    if self.$selectedHabitat.wrappedValue == 0 {
+                        flag = false
+                    }
+                    
+                    if flag {
+                        let predictor = Predictor()
                         
-                       if let prediction = result["prediction"] as? Int {
-                            if prediction == 1 {
-                                self.prediction = "Poisonous"
-                            } else if prediction == 2 {
-                                self.prediction = "Edible"
+                        predictor.postJson(capShape: self.$selectedCapShape.wrappedValue, capSurface: self.$selectedCapSurface.wrappedValue, capColor: self.$selectedCapColor.wrappedValue, bruises: self.$selectedBruises.wrappedValue, odor: self.$selectedOdor.wrappedValue, gillAttachment: self.$selectedGillAttachment.wrappedValue, gillSpacing: self.$selectedGillSpacing.wrappedValue, gillSize: self.$selectedGillSize.wrappedValue, gillColor: self.$selectedGillColor.wrappedValue, stalkShape: self.$selectedStalkShape.wrappedValue, stalkRoot: self.$selectedStalkRoot.wrappedValue, stalkSurfaceAboveRing: self.$selectedStalkSurfaceAboveRing.wrappedValue, stalkSurfaceBelowRing: self.$selectedStalkSurfaceBelowRing.wrappedValue, stalkColorAboveRing: self.$selectedStalkColorAboveRing.wrappedValue, stalkColorBelowRing: self.$selectedStalkColorBelowRing.wrappedValue, veilType: self.$selectedVeilType.wrappedValue, veilColor: self.$selectedVeilColor.wrappedValue, ringNumber: self.$selectedRingNumber.wrappedValue, ringType: self.$selectedRingType.wrappedValue, sporePrintColor: self.$selectedSporePrintColor.wrappedValue, population: self.$selectedPopulation.wrappedValue, habitat: self.$selectedHabitat.wrappedValue) { result in
+                            
+                           if let prediction = result["prediction"] as? Int {
+                                if prediction == 1 {
+                                    self.prediction = "Poisonous"
+                                } else if prediction == 2 {
+                                    self.prediction = "Edible"
+                                } else {
+                                    self.prediction = "Unknown"
+                                }
                             } else {
-                                self.prediction = "Unknown"
+                                self.prediction = "Unkown"
                             }
-                        } else {
-                            self.prediction = "Unkown"
+                            
+                            if let confidence = result["confidence"] as? Int {
+                                self.confidence = Double(confidence) * 100.0
+                            } else {
+                                self.confidence = 0.0
+                            }
                         }
-                        
-                        if let confidence = result["confidence"] as? Int {
-                            self.confidence = Double(confidence) * 100.0
-                        } else {
-                            self.confidence = 0.0
-                        }
+                    } else {
+                        self.validationError = true
                     }
                 }) {
                     Text("Submit")
@@ -295,21 +387,20 @@ struct PredictorView: View {
                 .padding(.top)
             }
             
-            if (self.prediction != "" && self.confidence != -1.0) {
+            if self.validationError {
                 VStack {
-                    MushroomResultView(prediction: prediction, confidence: confidence)
+                    Text("Please fill out all of the criteria...")
                         .padding()
                     
                     Button(action: {
-                        self.prediction = ""
-                        self.confidence = -1.0
+                        self.validationError = false
                     }) {
                         Text("Close")
                             .padding()
                             .foregroundColor(Color.red)
                             .overlay(
                                 RoundedRectangle(cornerRadius: 20)
-                                    .stroke(Color.red, lineWidth: 3)
+                                    .stroke(Color.red, lineWidth:  3)
                             )
                     }
                     .padding(.bottom, 10)
@@ -319,6 +410,32 @@ struct PredictorView: View {
                     RoundedRectangle(cornerRadius: 20)
                         .stroke(Color.black, lineWidth: 1)
                 )
+            } else {
+                if (self.prediction != "" && self.confidence != -1.0) {
+                    VStack {
+                        MushroomResultView(prediction: prediction, confidence: confidence)
+                            .padding()
+                        
+                        Button(action: {
+                            self.prediction = ""
+                            self.confidence = -1.0
+                        }) {
+                            Text("Close")
+                                .padding()
+                                .foregroundColor(Color.red)
+                                .overlay(
+                                    RoundedRectangle(cornerRadius: 20)
+                                        .stroke(Color.red, lineWidth: 3)
+                                )
+                        }
+                        .padding(.bottom, 10)
+                    }
+                    .background(Color.white)
+                    .overlay(
+                        RoundedRectangle(cornerRadius: 20)
+                            .stroke(Color.black, lineWidth: 1)
+                    )
+                }
             }
         }
     }
