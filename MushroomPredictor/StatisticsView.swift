@@ -9,28 +9,43 @@
 import SwiftUI
 
 struct StatisticsView: View {
-    var statistics = Statistics()
+    var statistics: Statistics = Statistics()
+    var graphTypes: [String] = ["Basic", "Bar", "Pie"]
+    var props: [String] = ["Cap-Shape", "Cap-Surface", "Cap-Color"]
     
     @State var image: UIImage = UIImage()
+    @State var selectedGraphType: String = "Basic"
+    @State var selectedProp: String = "Cap-Shape"
     
     var body: some View {
         VStack {
-            Image(uiImage: self.image)
+            HStack {
+                DropDownMenu(label: "Graph Type", menuVals: self.graphTypes, alignment: .leading
+                    , callback: { selected in self.selectedGraphType = selected}, selected: self.selectedGraphType)
+                    .padding()
+                DropDownMenu(label: "Property", menuVals: self.props, alignment: .leading
+                    , callback: { selected in self.selectedProp = selected}, selected: self.selectedProp)
+                .padding()
+            }
             
-            Button(action: {
-                self.statistics.postJson(graphType: "basic") { result in
-                    if let imageObj = result["image"] as? String {
-                        if let imageData = Data(base64Encoded: imageObj) {
-                            if let uiImage = UIImage(data: imageData) {
-                                self.image = uiImage
+            VStack {
+                Image(uiImage: self.image)
+                
+                Button(action: {
+                    self.statistics.postJson(graphType: self.selectedGraphType.lowercased(), prop: self.selectedProp.lowercased()) { result in
+                        if let imageObj = result["image"] as? String {
+                            if let imageData = Data(base64Encoded: imageObj) {
+                                if let uiImage = UIImage(data: imageData) {
+                                    self.image = uiImage
+                                }
                             }
                         }
                     }
+                }) {
+                    Text("Enter")
                 }
-            }) {
-                Text("Enter")
-            }
-        }
+            } // End Image Button VStack
+        } // End Section VStack
     }
 }
 

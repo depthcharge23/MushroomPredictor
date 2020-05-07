@@ -10,8 +10,8 @@ import Foundation
 import NetworkExtension
 
 class Statistics {
-    func postJson(graphType: String, completionHandler: @escaping (_ rtn: [String: Any]) -> ()) {
-        let json: [String: Any] = ["imageType": graphType]
+    func postJson(graphType: String, prop: String, completionHandler: @escaping (_ rtn: [String: Any]) -> ()) {
+        let json: [String: Any] = ["graphType": graphType, "prop": prop]
         
         let jsonData = try? JSONSerialization.data(withJSONObject: json)
         
