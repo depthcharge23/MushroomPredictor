@@ -437,8 +437,8 @@ struct PredictorView: View {
                     )
                 }
             }
-        }
-    }
+        } // End of ZStack
+    } // End of body
 }
 
 struct PredictorView_Previews: PreviewProvider {

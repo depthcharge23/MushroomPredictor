@@ -10,8 +10,16 @@ import SwiftUI
 
 struct ContentView: View {
     var body: some View {
-        ZStack {
-            PredictorView()
+        TabView {
+            VStack {
+                PredictorView()
+            }
+            .padding(.bottom, 10)
+            .tabItem { Text("Predict") }.tag(1)
+            
+            VStack {
+               StatisticsView()
+            }.tabItem { Text("Statistics") }.tag(2)
         }
     }
 }
