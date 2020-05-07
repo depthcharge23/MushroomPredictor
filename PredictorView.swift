@@ -378,7 +378,7 @@ struct PredictorView: View {
                 }) {
                     Text("Submit")
                         .foregroundColor(Color.green)
-                        .padding()
+                        .padding(10)
                         .overlay(
                             RoundedRectangle(cornerRadius: 20)
                                 .stroke(Color.green, lineWidth: 3)
@@ -396,7 +396,7 @@ struct PredictorView: View {
                         self.validationError = false
                     }) {
                         Text("Close")
-                            .padding()
+                            .padding(10)
                             .foregroundColor(Color.red)
                             .overlay(
                                 RoundedRectangle(cornerRadius: 20)
@@ -421,7 +421,7 @@ struct PredictorView: View {
                             self.confidence = -1.0
                         }) {
                             Text("Close")
-                                .padding()
+                                .padding(10)
                                 .foregroundColor(Color.red)
                                 .overlay(
                                     RoundedRectangle(cornerRadius: 20)

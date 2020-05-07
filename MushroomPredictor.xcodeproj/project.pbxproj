@@ -22,6 +22,7 @@
 		C510DAC92460DFAF00ECDC65 /* DropDownMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = C510DAC82460DFAF00ECDC65 /* DropDownMenu.swift */; };
 		C510DACB24639AAA00ECDC65 /* StatisticsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C510DACA24639AAA00ECDC65 /* StatisticsView.swift */; };
 		C510DACD24639ADE00ECDC65 /* Statistics.swift in Sources */ = {isa = PBXBuildFile; fileRef = C510DACC24639ADE00ECDC65 /* Statistics.swift */; };
+		C51B60492464995200EE6B3E /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C51B60482464995200EE6B3E /* LoginView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -54,6 +55,7 @@
 		C510DAC82460DFAF00ECDC65 /* DropDownMenu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DropDownMenu.swift; sourceTree = "<group>"; };
 		C510DACA24639AAA00ECDC65 /* StatisticsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatisticsView.swift; sourceTree = "<group>"; };
 		C510DACC24639ADE00ECDC65 /* Statistics.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Statistics.swift; sourceTree = "<group>"; };
+		C51B60482464995200EE6B3E /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -98,6 +100,7 @@
 				C510DA962459D5F200ECDC65 /* AppDelegate.swift */,
 				C510DA982459D5F200ECDC65 /* SceneDelegate.swift */,
 				C510DA9A2459D5F200ECDC65 /* ContentView.swift */,
+				C51B60482464995200EE6B3E /* LoginView.swift */,
 				C510DACA24639AAA00ECDC65 /* StatisticsView.swift */,
 				C510DACC24639ADE00ECDC65 /* Statistics.swift */,
 				C510DAC2245F84C400ECDC65 /* MushroomResultView.swift */,
@@ -238,6 +241,7 @@
 				C510DAC72460DA7C00ECDC65 /* RadioButtonGroup.swift in Sources */,
 				C510DAC92460DFAF00ECDC65 /* DropDownMenu.swift in Sources */,
 				C510DA992459D5F200ECDC65 /* SceneDelegate.swift in Sources */,
+				C51B60492464995200EE6B3E /* LoginView.swift in Sources */,
 				C510DAC1245E833E00ECDC65 /* PredictorView.swift in Sources */,
 				C510DAC3245F84C400ECDC65 /* MushroomResultView.swift in Sources */,
 				C510DAC52460D01300ECDC65 /* RadioButton.swift in Sources */,
