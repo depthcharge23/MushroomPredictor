@@ -9,23 +9,34 @@
 import SwiftUI
 
 struct ContentView: View {
+    @State var signInSuccess: Bool
+    
     var body: some View {
-        TabView {
-            VStack {
-                PredictorView()
+        Group {
+            if self.signInSuccess {
+                TabView {
+                    VStack {
+                        PredictorView()
+                    }
+                    .padding(.bottom, 10)
+                    .tabItem { Text("Predict") }.tag(1)
+                    
+                    VStack {
+                       StatisticsView()
+                    }.tabItem { Text("Statistics") }.tag(2)
+                }
+            } else {
+                LoginView(callback: { result in
+                    print(result)
+                    self.signInSuccess = result
+                })
             }
-            .padding(.bottom, 10)
-            .tabItem { Text("Predict") }.tag(1)
-            
-            VStack {
-               StatisticsView()
-            }.tabItem { Text("Statistics") }.tag(2)
         }
     }
 }
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
-        ContentView()
+        ContentView(signInSuccess: false)
     }
 }

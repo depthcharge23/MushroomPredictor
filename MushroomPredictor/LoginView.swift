@@ -11,6 +11,9 @@ import SwiftUI
 struct LoginView: View {
     @State var username = ""
     @State var password = ""
+    @State var showError = false
+    
+    var callback: (Bool) -> ()
     
     var body: some View {
         VStack {
@@ -18,9 +21,15 @@ struct LoginView: View {
                 Image("MushroomLogo")
                 Text("Mushroom Predictor")
                     .font(.title)
-            }
+            } // End of header for login form
             
             VStack(alignment: .leading) {
+                if self.showError {
+                    Text("Incorrect email or passowrd")
+                        .foregroundColor(Color.red)
+                        .padding(.bottom, 5)
+                }
+                
                 Text("Email")
                     .padding(.leading)
                 
@@ -48,8 +57,14 @@ struct LoginView: View {
             .padding()
             
             VStack {
-                Button(action: {}) {
-                    Text("Submit")
+                Button(action: {
+                    if self.username != self.password {
+                        self.showError = true
+                    } else {
+                        self.callback(true)
+                    }
+                }) {
+                    Text("Sign In")
                         .foregroundColor(Color.green)
                         .padding(10)
                         .overlay(
@@ -57,13 +72,15 @@ struct LoginView: View {
                                 .stroke(Color.green, lineWidth: 2)
                         )
                 }
-            }
+            } // End of login button VStack
         }
     }
 }
 
 struct LoginView_Previews: PreviewProvider {
     static var previews: some View {
-        LoginView()
+        LoginView(callback: { _ in
+            print("Hello")
+        })
     }
 }
