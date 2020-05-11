@@ -19,17 +19,19 @@ struct StatisticsView: View {
     
     var body: some View {
         VStack {
-            HStack {
-                DropDownMenu(label: "Graph Type", menuVals: self.graphTypes, alignment: .leading
-                    , callback: { selected in self.selectedGraphType = selected}, selected: self.selectedGraphType)
-                    .padding()
-                DropDownMenu(label: "Property", menuVals: self.props, alignment: .leading
-                    , callback: { selected in self.selectedProp = selected}, selected: self.selectedProp)
-                .padding()
-            }
+            Text("Mushroom Statistics")
+                .font(.title)
             
             VStack {
-                Image(uiImage: self.image)
+                HStack {
+                    DropDownMenu(label: "Graph Type", menuVals: self.graphTypes, alignment: .leading
+                        , callback: { selected in self.selectedGraphType = selected}, selected: self.selectedGraphType)
+                        .padding()
+                    
+                    DropDownMenu(label: "Property", menuVals: self.props, alignment: .leading
+                        , callback: { selected in self.selectedProp = selected}, selected: self.selectedProp)
+                        .padding()
+                } // End of DropDownMenu HStack
                 
                 Button(action: {
                     self.statistics.postJson(graphType: self.selectedGraphType.lowercased(), prop: self.selectedProp.lowercased()) { result in
@@ -43,9 +45,28 @@ struct StatisticsView: View {
                     }
                 }) {
                     Text("Enter")
+                        .foregroundColor(Color.green)
+                        .padding(10)
+                        .overlay(
+                            RoundedRectangle(cornerRadius: 20)
+                                .stroke(Color.green, lineWidth: 2)
+                        )
                 }
-            } // End Image Button VStack
-        } // End Section VStack
+            } // End Search Section VStack
+            
+            
+            Image(uiImage: self.image)
+                .resizable()
+                .aspectRatio(contentMode: .fit)
+                .padding(.leading)
+                .padding(.trailing)
+                .overlay(
+                    Rectangle()
+                        .stroke(Color.black, lineWidth: 2)
+                )
+            
+            Spacer()
+        } // End of Section VStack
     }
 }
 

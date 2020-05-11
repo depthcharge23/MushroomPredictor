@@ -27,7 +27,6 @@ struct ContentView: View {
                 }
             } else {
                 LoginView(callback: { result in
-                    print(result)
                     self.signInSuccess = result
                 })
             }
