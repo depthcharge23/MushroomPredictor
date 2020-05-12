@@ -10,12 +10,13 @@ import SwiftUI
 
 struct StatisticsView: View {
     var statistics: Statistics = Statistics()
-    var graphTypes: [String] = ["Basic", "Bar", "Pie"]
+    var graphTypes: [String] = ["Pie", "Bar"]
     var props: [String] = ["Cap-Shape", "Cap-Surface", "Cap-Color"]
     
     @State var image: UIImage = UIImage()
-    @State var selectedGraphType: String = "Basic"
-    @State var selectedProp: String = "Cap-Shape"
+    @State var selectedGraphType: String = "Pie"
+    @State var selectedProp: String = "Class"
+    @State var isLoading: Bool = false
     
     var body: some View {
         VStack {
@@ -34,6 +35,8 @@ struct StatisticsView: View {
                 } // End of DropDownMenu HStack
                 
                 Button(action: {
+                    self.isLoading = true
+                    
                     self.statistics.postJson(graphType: self.selectedGraphType.lowercased(), prop: self.selectedProp.lowercased()) { result in
                         if let imageObj = result["image"] as? String {
                             if let imageData = Data(base64Encoded: imageObj) {
@@ -42,6 +45,8 @@ struct StatisticsView: View {
                                 }
                             }
                         }
+                        
+                        self.isLoading = false
                     }
                 }) {
                     Text("Enter")
@@ -54,20 +59,38 @@ struct StatisticsView: View {
                 }
             } // End Search Section VStack
             
-            
             Image(uiImage: self.image)
                 .resizable()
                 .aspectRatio(contentMode: .fit)
                 .padding(.leading)
                 .padding(.trailing)
                 .overlay(
-                    Rectangle()
-                        .stroke(Color.black, lineWidth: 2)
+                    ZStack {
+                        if self.isLoading {
+                            Color.white
+                        }
+                        ActivityIndicator(isAnimating: self.$isLoading)
+                    }
                 )
             
             Spacer()
         } // End of Section VStack
-    }
+        .onAppear {
+            self.isLoading = true
+            
+            self.statistics.postJson(graphType: self.selectedGraphType.lowercased(), prop: self.selectedProp.lowercased()) { result in
+                if let imageObj = result["image"] as? String {
+                    if let imageData = Data(base64Encoded: imageObj) {
+                        if let uiImage = UIImage(data: imageData) {
+                            self.image = uiImage
+                        }
+                    }
+                }
+                
+                self.isLoading = false
+            }
+        }
+    } // End of body
 }
 
 struct StatisticsView_Previews: PreviewProvider {

@@ -23,6 +23,7 @@
 		C510DACB24639AAA00ECDC65 /* StatisticsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C510DACA24639AAA00ECDC65 /* StatisticsView.swift */; };
 		C510DACD24639ADE00ECDC65 /* Statistics.swift in Sources */ = {isa = PBXBuildFile; fileRef = C510DACC24639ADE00ECDC65 /* Statistics.swift */; };
 		C51B60492464995200EE6B3E /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C51B60482464995200EE6B3E /* LoginView.swift */; };
+		C5C73DEB246A1A0800C70A90 /* ActivityIndicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5C73DEA246A1A0800C70A90 /* ActivityIndicator.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -56,6 +57,7 @@
 		C510DACA24639AAA00ECDC65 /* StatisticsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatisticsView.swift; sourceTree = "<group>"; };
 		C510DACC24639ADE00ECDC65 /* Statistics.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Statistics.swift; sourceTree = "<group>"; };
 		C51B60482464995200EE6B3E /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
+		C5C73DEA246A1A0800C70A90 /* ActivityIndicator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityIndicator.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -100,6 +102,7 @@
 				C510DA962459D5F200ECDC65 /* AppDelegate.swift */,
 				C510DA982459D5F200ECDC65 /* SceneDelegate.swift */,
 				C510DA9A2459D5F200ECDC65 /* ContentView.swift */,
+				C5C73DEA246A1A0800C70A90 /* ActivityIndicator.swift */,
 				C51B60482464995200EE6B3E /* LoginView.swift */,
 				C510DACA24639AAA00ECDC65 /* StatisticsView.swift */,
 				C510DACC24639ADE00ECDC65 /* Statistics.swift */,
@@ -239,6 +242,7 @@
 				C510DACB24639AAA00ECDC65 /* StatisticsView.swift in Sources */,
 				C510DACD24639ADE00ECDC65 /* Statistics.swift in Sources */,
 				C510DAC72460DA7C00ECDC65 /* RadioButtonGroup.swift in Sources */,
+				C5C73DEB246A1A0800C70A90 /* ActivityIndicator.swift in Sources */,
 				C510DAC92460DFAF00ECDC65 /* DropDownMenu.swift in Sources */,
 				C510DA992459D5F200ECDC65 /* SceneDelegate.swift in Sources */,
 				C51B60492464995200EE6B3E /* LoginView.swift in Sources */,
