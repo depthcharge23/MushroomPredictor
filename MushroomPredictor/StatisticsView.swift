@@ -11,7 +11,7 @@ import SwiftUI
 struct StatisticsView: View {
     var statistics: Statistics = Statistics()
     var graphTypes: [String] = ["Pie", "Bar"]
-    var props: [String] = ["Cap-Shape", "Cap-Surface", "Cap-Color"]
+    var props: [String] = ["Cap-Shape", "Cap-Surface", "Cap-Color", "Gill-Attachment", "Gill-Spacing", "Gill-Size", "Gill-Color", "Stalk-Shape", "Stalk-Root", "Stalk-Surface-Above-Ring", "Stalk-Surface-Below-Ring", "Stalk-Color-Above-Ring", "Stalk-Color-Below-Ring", "Veil-Type", "Veil-Color", "Ring-Number", "Ring-Type", "Bruises", "Odor", "Spore-Print-Color", "Population", "Habitat"]
     
     @State var image: UIImage = UIImage()
     @State var selectedGraphType: String = "Pie"

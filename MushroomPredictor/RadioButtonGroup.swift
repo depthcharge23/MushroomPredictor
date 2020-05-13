@@ -20,9 +20,21 @@ struct RadioButtonGroup: View {
     }
     
     var body: some View {
-        VStack(alignment: .leading) {
-            ForEach(radioBtnVals, id: \.self) { val in
-                RadioButton(id: val, label: val, isMarked: self.selectedId == val ? true : false, callback: self.radioGroupCallback)
+        VStack {
+            ScrollView {
+                VStack(alignment: .leading) {
+                    ForEach(radioBtnVals, id: \.self) { val in
+                        RadioButton(id: val, label: val, isMarked: self.selectedId == val ? true : false, callback: self.radioGroupCallback)
+                    }
+                }
+                .padding(10)
+            }
+            .frame(height: 100)
+            
+            if self.radioBtnVals.count > 3 {
+                Text("Scroll for more...")
+                    .font(.system(size: 10))
+                    .foregroundColor(Color.blue)
             }
         }
     }
