@@ -8,12 +8,65 @@
 
 import SwiftUI
 
+func loginUser(username: String, password: String, completionHandler: @escaping ([String: Any]) -> ()) -> () {
+    let json = [
+        "username": username,
+        "password": password
+    ]
+    
+    let jsonData = try? JSONSerialization.data(withJSONObject: json)
+    
+    let url = URL(string: "https://mushroom-predictor.azurewebsites.net/get-user")!
+    var request = URLRequest(url: url)
+    request.httpMethod = "POST"
+    request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+    request.httpBody = jsonData
+    
+    let task = URLSession.shared.dataTask(with: request) { data, response, error in
+        guard let data = data, error == nil else {
+            print(error?.localizedDescription ?? "No data")
+            return
+        }
+        
+        let responseJSON = try? JSONSerialization.jsonObject(with: data, options: [])
+
+        if let responseJSON = responseJSON as? [String: Any] {
+            completionHandler(responseJSON)
+        }
+    }
+    
+    task.resume()
+}
+
 struct LoginView: View {
     @State var username = ""
     @State var password = ""
-    @State var showError = false
+    @State var showLoginError = false
+    @State var showServerError = false
+    @State var isLoading = false
     
     var callback: (Bool) -> ()
+    
+    func completionHandler(input: [String: Any]) -> () {
+        self.isLoading = true
+        let status = input["status"] as? String
+        
+        if status == "valid" {
+            self.callback(true)
+            self.showLoginError = false
+            self.showServerError = false
+        } else if status == "invalid" {
+            self.callback(false)
+            self.showLoginError = true
+            self.showServerError = false
+        } else {
+            self.callback(false)
+            self.showLoginError = false
+            self.showServerError = true
+        }
+        
+        self.isLoading = false
+    }
     
     var body: some View {
         VStack {
@@ -24,8 +77,12 @@ struct LoginView: View {
             } // End of header for login form
             
             VStack(alignment: .leading) {
-                if self.showError {
-                    Text("Incorrect email or passowrd")
+                if self.showLoginError {
+                    Text("Incorrect email or passowrd...")
+                        .foregroundColor(Color.red)
+                        .padding(.bottom, 5)
+                } else if self.showServerError {
+                    Text("An error has occurred. Please try again...")
                         .foregroundColor(Color.red)
                         .padding(.bottom, 5)
                 }
@@ -34,6 +91,7 @@ struct LoginView: View {
                     .padding(.leading)
                 
                 TextField("Email", text: self.$username)
+                    .autocapitalization(.none)
                     .padding(.leading)
                     .padding(.bottom, 5)
                     .padding(.top, 5)
@@ -55,14 +113,18 @@ struct LoginView: View {
                     )
             } // End of login control VStack
             .padding()
+            .overlay(
+                ZStack {
+                    if self.isLoading {
+                        Color.white
+                    }
+                    ActivityIndicator(isAnimating: self.$isLoading)
+                }
+            )
             
             VStack {
                 Button(action: {
-                    if self.username != self.password {
-                        self.showError = true
-                    } else {
-                        self.callback(true)
-                    }
+                    loginUser(username: self.username, password: self.password, completionHandler: self.completionHandler)
                 }) {
                     Text("Sign In")
                         .foregroundColor(Color.green)
