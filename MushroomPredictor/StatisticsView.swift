@@ -10,8 +10,8 @@ import SwiftUI
 
 struct StatisticsView: View {
     var statistics: Statistics = Statistics()
-    var graphTypes: [String] = ["Pie", "Bar"]
-    var props: [String] = ["Cap-Shape", "Cap-Surface", "Cap-Color", "Gill-Attachment", "Gill-Spacing", "Gill-Size", "Gill-Color", "Stalk-Shape", "Stalk-Root", "Stalk-Surface-Above-Ring", "Stalk-Surface-Below-Ring", "Stalk-Color-Above-Ring", "Stalk-Color-Below-Ring", "Veil-Type", "Veil-Color", "Ring-Number", "Ring-Type", "Bruises", "Odor", "Spore-Print-Color", "Population", "Habitat"]
+    var graphTypes: [String] = ["Pie", "Bar", "Heat Map"]
+    var props: [String] = ["Class", "Cap-Shape", "Cap-Surface", "Cap-Color", "Gill-Attachment", "Gill-Spacing", "Gill-Size", "Gill-Color", "Stalk-Shape", "Stalk-Root", "Stalk-Surface-Above-Ring", "Stalk-Surface-Below-Ring", "Stalk-Color-Above-Ring", "Stalk-Color-Below-Ring", "Veil-Type", "Veil-Color", "Ring-Number", "Ring-Type", "Bruises", "Odor", "Spore-Print-Color", "Population", "Habitat"]
     
     @State var image: UIImage = UIImage()
     @State var selectedGraphType: String = "Pie"
@@ -37,16 +37,30 @@ struct StatisticsView: View {
                 Button(action: {
                     self.isLoading = true
                     
-                    self.statistics.postJson(graphType: self.selectedGraphType.lowercased(), prop: self.selectedProp.lowercased()) { result in
-                        if let imageObj = result["image"] as? String {
-                            if let imageData = Data(base64Encoded: imageObj) {
-                                if let uiImage = UIImage(data: imageData) {
-                                    self.image = uiImage
+                    if self.selectedGraphType != "Heat Map" {
+                        self.statistics.postJson(graphType: self.selectedGraphType.lowercased(), prop: self.selectedProp.lowercased()) { result in
+                            if let imageObj = result["image"] as? String {
+                                if let imageData = Data(base64Encoded: imageObj) {
+                                    if let uiImage = UIImage(data: imageData) {
+                                        self.image = uiImage
+                                    }
                                 }
                             }
+                            
+                            self.isLoading = false
                         }
-                        
-                        self.isLoading = false
+                    } else {
+                        self.statistics.postJsonHeatMap(prop: self.selectedProp.lowercased()) { result in
+                            if let imageObj = result["image"] as? String {
+                                if let imageData = Data(base64Encoded: imageObj) {
+                                    if let uiImage = UIImage(data: imageData) {
+                                        self.image = uiImage
+                                    }
+                                }
+                            }
+                            
+                            self.isLoading = false
+                        }
                     }
                 }) {
                     Text("Enter")
@@ -77,7 +91,7 @@ struct StatisticsView: View {
         } // End of Section VStack
         .onAppear {
             self.isLoading = true
-            
+
             self.statistics.postJson(graphType: self.selectedGraphType.lowercased(), prop: self.selectedProp.lowercased()) { result in
                 if let imageObj = result["image"] as? String {
                     if let imageData = Data(base64Encoded: imageObj) {
@@ -86,7 +100,7 @@ struct StatisticsView: View {
                         }
                     }
                 }
-                
+
                 self.isLoading = false
             }
         }

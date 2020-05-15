@@ -36,4 +36,31 @@ class Statistics {
         
         task.resume()
     }
+    
+    func postJsonHeatMap(prop: String, completionHandler: @escaping (_ rtn: [String: Any]) -> ()) {
+        let json: [String: Any] = ["prop": prop]
+        
+        let jsonData = try? JSONSerialization.data(withJSONObject: json)
+        
+        let url = URL(string: "https://mushroom-predictor.azurewebsites.net/heat-map-data")!
+        var request = URLRequest(url: url)
+        request.httpMethod = "POST"
+        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        request.httpBody = jsonData
+        
+        let task = URLSession.shared.dataTask(with: request) { data, response, error in
+            guard let data = data, error == nil else {
+                print(error?.localizedDescription ?? "No data")
+                return
+            }
+            
+            let responseJSON = try? JSONSerialization.jsonObject(with: data, options: [])
+
+            if let responseJSON = responseJSON as? [String: Any] {
+                completionHandler(responseJSON)
+            }
+        }
+        
+        task.resume()
+    }
 }
