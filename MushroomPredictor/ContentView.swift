@@ -24,6 +24,10 @@ struct ContentView: View {
                     VStack {
                        StatisticsView()
                     }.tabItem { Text("Statistics") }.tag(2)
+                    
+                    VStack {
+                        TaggedDataView()
+                    }.tabItem { Text("Tagged Data") }.tag(3)
                 }
             } else {
                 LoginView(callback: { result in
