@@ -37,9 +37,10 @@ class Predictor {
             }
             
             let responseJSON = try? JSONSerialization.jsonObject(with: data, options: [])
-
             if let responseJSON = responseJSON as? [String: Any] {
                 completionHandler(responseJSON)
+            } else {
+                completionHandler(["error": "An internal error occurred..."])
             }
         }
         

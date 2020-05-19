@@ -17,93 +17,129 @@ struct StatisticsView: View {
     @State var selectedGraphType: String = "Pie"
     @State var selectedProp: String = "Class"
     @State var isLoading: Bool = false
+    @State var errorMsg = ""
     
     var body: some View {
-        VStack {
-            Text("Mushroom Statistics")
-                .font(.title)
-            
+        ZStack {
             VStack {
-                HStack {
-                    DropDownMenu(label: "Graph Type", menuVals: self.graphTypes, alignment: .leading
-                        , callback: { selected in self.selectedGraphType = selected}, selected: self.selectedGraphType)
-                        .padding()
-                    
-                    DropDownMenu(label: "Property", menuVals: self.props, alignment: .leading
-                        , callback: { selected in self.selectedProp = selected}, selected: self.selectedProp)
-                        .padding()
-                } // End of DropDownMenu HStack
+                Text("Mushroom Statistics")
+                    .font(.title)
                 
-                Button(action: {
-                    self.isLoading = true
+                VStack {
+                    HStack {
+                        DropDownMenu(label: "Graph Type", menuVals: self.graphTypes, alignment: .leading
+                            , callback: { selected in self.selectedGraphType = selected}, selected: self.selectedGraphType)
+                            .padding()
+                        
+                        DropDownMenu(label: "Property", menuVals: self.props, alignment: .leading
+                            , callback: { selected in self.selectedProp = selected}, selected: self.selectedProp)
+                            .padding()
+                    } // End of DropDownMenu HStack
                     
-                    if self.selectedGraphType != "Heat Map" {
-                        self.statistics.postJson(graphType: self.selectedGraphType.lowercased(), prop: self.selectedProp.lowercased()) { result in
-                            if let imageObj = result["image"] as? String {
-                                if let imageData = Data(base64Encoded: imageObj) {
-                                    if let uiImage = UIImage(data: imageData) {
-                                        self.image = uiImage
+                    Button(action: {
+                        self.isLoading = true
+                        
+                        if self.selectedGraphType != "Heat Map" {
+                            self.statistics.postJson(graphType: self.selectedGraphType.lowercased(), prop: self.selectedProp.lowercased()) { result in
+                                if let imageObj = result["image"] as? String {
+                                    if let imageData = Data(base64Encoded: imageObj) {
+                                        if let uiImage = UIImage(data: imageData) {
+                                            self.image = uiImage
+                                        }
                                     }
                                 }
+                                
+                                if let error = result["error"] as? String {
+                                    self.errorMsg = error
+                                }
+                                
+                                self.isLoading = false
                             }
-                            
-                            self.isLoading = false
+                        } else {
+                            self.statistics.postJsonHeatMap(prop: self.selectedProp.lowercased()) { result in
+                                if let imageObj = result["image"] as? String {
+                                    if let imageData = Data(base64Encoded: imageObj) {
+                                        if let uiImage = UIImage(data: imageData) {
+                                            self.image = uiImage
+                                        }
+                                    }
+                                }
+                                
+                                if let error = result["error"] as? String {
+                                    self.errorMsg = error
+                                }
+                                
+                                self.isLoading = false
+                            }
                         }
-                    } else {
-                        self.statistics.postJsonHeatMap(prop: self.selectedProp.lowercased()) { result in
-                            if let imageObj = result["image"] as? String {
-                                if let imageData = Data(base64Encoded: imageObj) {
-                                    if let uiImage = UIImage(data: imageData) {
-                                        self.image = uiImage
-                                    }
-                                }
+                    }) {
+                        Text("Enter")
+                            .foregroundColor(Color.green)
+                            .padding(10)
+                            .overlay(
+                                RoundedRectangle(cornerRadius: 20)
+                                    .stroke(Color.green, lineWidth: 2)
+                            )
+                    }
+                } // End Search Section VStack
+                
+                Image(uiImage: self.image)
+                    .resizable()
+                    .aspectRatio(contentMode: .fit)
+                    .padding(.leading)
+                    .padding(.trailing)
+                    .overlay(
+                        ZStack {
+                            if self.isLoading {
+                                Color.white
                             }
-                            
-                            self.isLoading = false
+                            ActivityIndicator(isAnimating: self.$isLoading)
+                        }
+                    )
+                
+                Spacer()
+            } // End of Section VStack
+            .onAppear {
+                self.isLoading = true
+
+                self.statistics.postJson(graphType: self.selectedGraphType.lowercased(), prop: self.selectedProp.lowercased()) { result in
+                    if let imageObj = result["image"] as? String {
+                        if let imageData = Data(base64Encoded: imageObj) {
+                            if let uiImage = UIImage(data: imageData) {
+                                self.image = uiImage
+                            }
                         }
                     }
-                }) {
-                    Text("Enter")
-                        .foregroundColor(Color.green)
-                        .padding(10)
-                        .overlay(
-                            RoundedRectangle(cornerRadius: 20)
-                                .stroke(Color.green, lineWidth: 2)
-                        )
+
+                    self.isLoading = false
                 }
-            } // End Search Section VStack
+            } // End of VStack
             
-            Image(uiImage: self.image)
-                .resizable()
-                .aspectRatio(contentMode: .fit)
-                .padding(.leading)
-                .padding(.trailing)
+            if self.errorMsg != "" {
+                VStack {
+                    Text(self.errorMsg)
+                        .padding()
+                    
+                    Button(action: {
+                        self.errorMsg = ""
+                    }) {
+                        Text("Close")
+                            .foregroundColor(Color.red)
+                            .padding(10)
+                            .overlay(
+                                RoundedRectangle(cornerRadius: 20)
+                                    .stroke(Color.red, lineWidth: 2)
+                            )
+                    }
+                    .padding(.bottom)
+                }
+                .background(Color.white)
                 .overlay(
-                    ZStack {
-                        if self.isLoading {
-                            Color.white
-                        }
-                        ActivityIndicator(isAnimating: self.$isLoading)
-                    }
+                    RoundedRectangle(cornerRadius: 20)
+                        .stroke(Color.black, lineWidth: 2)
                 )
-            
-            Spacer()
-        } // End of Section VStack
-        .onAppear {
-            self.isLoading = true
-
-            self.statistics.postJson(graphType: self.selectedGraphType.lowercased(), prop: self.selectedProp.lowercased()) { result in
-                if let imageObj = result["image"] as? String {
-                    if let imageData = Data(base64Encoded: imageObj) {
-                        if let uiImage = UIImage(data: imageData) {
-                            self.image = uiImage
-                        }
-                    }
-                }
-
-                self.isLoading = false
             }
-        }
+        } // End of ZStack
     } // End of body
 }
 

@@ -81,6 +81,7 @@ struct PredictorView: View {
     
     @State var prediction = ""
     @State var confidence = 0.0
+    @State var errorMsg = ""
     
     @State var validationError = false
     
@@ -373,13 +374,17 @@ struct PredictorView: View {
                                     self.prediction = "Unknown"
                                 }
                             } else {
-                                self.prediction = "Unkown"
+                                self.prediction = "Unknown"
                             }
                             
                             if let confidence = result["confidence"] as? Int {
                                 self.confidence = Double(confidence) * 100.0
                             } else {
-                                self.confidence = 0.0
+                                self.confidence = -1.0
+                            }
+                            
+                            if let error = result["error"] as? String {
+                                self.errorMsg = error
                             }
                         }
                         
@@ -422,6 +427,29 @@ struct PredictorView: View {
                 .overlay(
                     RoundedRectangle(cornerRadius: 20)
                         .stroke(Color.black, lineWidth: 1)
+                )
+            } else if self.errorMsg != "" {
+                VStack {
+                    Text(self.errorMsg)
+                        .padding()
+                    
+                    Button(action: {
+                        self.errorMsg = ""
+                    }) {
+                        Text("Close")
+                            .foregroundColor(Color.red)
+                            .padding(10)
+                            .overlay(
+                                RoundedRectangle(cornerRadius: 20)
+                                    .stroke(Color.red, lineWidth: 2)
+                            )
+                    }
+                    .padding(.bottom)
+                }
+                .background(Color.white)
+                .overlay(
+                    RoundedRectangle(cornerRadius: 20)
+                        .stroke(Color.black, lineWidth: 2)
                 )
             } else {
                 if (self.prediction != "" && self.confidence != -1.0) {

@@ -31,6 +31,8 @@ func postJSON(prop: String, completionHandler: @escaping ([String: Any]) -> ()) 
 
         if let responseJSON = responseJSON as? [String: Any] {
             completionHandler(responseJSON)
+        } else {
+            completionHandler(["error": "An internal error occurred..."])
         }
     }
     
@@ -44,62 +46,94 @@ struct TaggedDataView: View {
     
     @State var selectedProp = "Cap-Shape"
     @State var isLoading = false
+    @State var errorMsg = ""
     
     var body: some View {
-        VStack {
-            Text("Mushroom Data Tags")
-                .font(.title)
-            
-            HStack {
-                DropDownMenu(label: "Property", menuVals: self.props, alignment: .leading, callback: { selected in self.selectedProp = selected }, selected: self.selectedProp)
-                    .padding(10)
+        ZStack {
+            VStack {
+                Text("Mushroom Data Tags")
+                    .font(.title)
+                
+                HStack {
+                    DropDownMenu(label: "Property", menuVals: self.props, alignment: .leading, callback: { selected in self.selectedProp = selected }, selected: self.selectedProp)
+                        .padding(10)
 
-                Button(action: {
-                    self.isLoading = true
-                    self.vals = []
+                    Button(action: {
+                        self.isLoading = true
+                        self.vals = []
 
-                    postJSON(prop: self.selectedProp.lowercased()) { result in
-                        for (key, value) in result {
-                            var arr = [key]
+                        postJSON(prop: self.selectedProp.lowercased()) { result in
+                            for (key, value) in result {
+                                if key == "error" {
+                                    self.errorMsg = value as! String
+                                } else {
+                                    var arr = [key]
 
-                            if let dataValue = value as? [String] {
-                                for val in dataValue {
-                                    arr.append(val)
+                                    if let dataValue = value as? [String] {
+                                        for val in dataValue {
+                                            arr.append(val)
+                                        }
+                                    }
+
+                                    self.vals.append(arr)
                                 }
                             }
 
-                            self.vals.append(arr)
+                            self.isLoading = false
                         }
-
-                        self.isLoading = false
+                    }) {
+                        Text("Enter")
+                            .foregroundColor(Color.green)
+                            .padding(10)
+                            .overlay(
+                                RoundedRectangle(cornerRadius: 20)
+                                    .stroke(Color.green, lineWidth: 2)
+                            )
                     }
-                }) {
-                    Text("Enter")
-                        .foregroundColor(Color.green)
-                        .padding(10)
-                        .overlay(
-                            RoundedRectangle(cornerRadius: 20)
-                                .stroke(Color.green, lineWidth: 2)
-                        )
-                }
-            } // End of HStack Menu
-            
-            TaggedDataScrollView(vals: self.vals)
-                .padding()
-                .overlay(
-                    ZStack {
-                        if self.isLoading {
-                            Color.white
-                        }
-
-                        ActivityIndicator(isAnimating: self.$isLoading)
-                    }
+                } // End of HStack Menu
+                
+                TaggedDataScrollView(vals: self.vals)
                     .padding()
-                )
+                    .overlay(
+                        ZStack {
+                            if self.isLoading {
+                                Color.white
+                            }
+
+                            ActivityIndicator(isAnimating: self.$isLoading)
+                        }
+                        .padding()
+                    )
+                
+                Spacer()
+            } // End of Parent VStack
+            .padding()
             
-            Spacer()
-        } // End of Parent VStack
-        .padding()
+            if self.errorMsg != "" {
+                VStack {
+                    Text(self.errorMsg)
+                        .padding()
+                    
+                    Button(action: {
+                        self.errorMsg = ""
+                    }) {
+                        Text("Close")
+                            .foregroundColor(Color.red)
+                            .padding(10)
+                            .overlay(
+                                RoundedRectangle(cornerRadius: 20)
+                                    .stroke(Color.red, lineWidth: 2)
+                            )
+                    }
+                    .padding(.bottom)
+                }
+                .background(Color.white)
+                .overlay(
+                    RoundedRectangle(cornerRadius: 20)
+                        .stroke(Color.black, lineWidth: 2)
+                )
+            }
+        }
     }
 }
 

@@ -31,6 +31,8 @@ class Statistics {
 
             if let responseJSON = responseJSON as? [String: Any] {
                 completionHandler(responseJSON)
+            } else {
+                completionHandler(["error": "An internal error occurred..."])
             }
         }
         
@@ -58,6 +60,8 @@ class Statistics {
 
             if let responseJSON = responseJSON as? [String: Any] {
                 completionHandler(responseJSON)
+            } else {
+                completionHandler(["error": "An internal error occurred..."])
             }
         }
         
