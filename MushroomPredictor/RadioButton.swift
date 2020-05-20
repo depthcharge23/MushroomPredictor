@@ -1,6 +1,9 @@
 //
-//  Checkbox.swift
+//  RadioButton.swift
 //  MushroomPredictor
+//
+//  The RadioButton view is the view that is used to represent the
+//  radio button throughout the app.
 //
 //  Created by Aaron Mathews on 5/4/20.
 //  Copyright © 2020 Aaron Mathews. All rights reserved.
@@ -17,6 +20,8 @@ struct RadioButton: View {
     let isMarked: Bool
     let callback: (String) -> ()
     
+    // Init function for the struct giving some of the props default
+    // values
     init (id: String, label: String, size: CGFloat = 10, color: Color = Color.black, textSize: CGFloat = 14, isMarked: Bool = false, callback: @escaping (String) -> ()) {
         self.id = id
         self.label = label
@@ -28,16 +33,20 @@ struct RadioButton: View {
     }
     
     var body: some View {
+        // The actual "radio button" is a button!
         Button(action: {
             self.callback(self.id)
         }) {
             HStack(spacing: 10) {
+                // Image that immitates a radio button checkbox
+                // being checked
                 Image(systemName: self.isMarked ? "largecircle.fill.circle" : "circle")
                     .renderingMode(.original)
                 .resizable()
                     .aspectRatio(contentMode: .fit)
                     .frame(width: self.size, height: self.size)
                 
+                // The radio button label
                 Text(label)
                     .font(Font.system(size: textSize))
             }

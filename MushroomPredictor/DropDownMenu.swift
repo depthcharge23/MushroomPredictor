@@ -2,6 +2,9 @@
 //  DropDownMenu.swift
 //  MushroomPredictor
 //
+//  The DropDownMenu view is used to create the drop down menus
+//  used throughout the app.
+//
 //  Created by Aaron Mathews on 5/4/20.
 //  Copyright © 2020 Aaron Mathews. All rights reserved.
 //
@@ -19,22 +22,30 @@ struct DropDownMenu: View {
     
     var body: some View {
         VStack(alignment: self.alignment) {
+            // The menu header controls
+            // onTapGesture() toggle the self.expand value
             HStack {
                 VStack(alignment: .leading) {
                     Text(self.label)
                         .font(.headline)
+                    
+                    // Shows the value selected from the radio
+                    // button group
                     if selected != "" && !expand {
                         Text(selected)
                             .font(.subheadline)
                     }
                 }
                 .padding(.trailing)
+                
+                // The chevron image, up or down
                 Image(systemName: self.expand ? "chevron.up" : "chevron.down")
             }
             .onTapGesture {
                 self.expand.toggle()
             }
             
+            // On expand show the radio button group
             if self.expand {
                 RadioButtonGroup(callback: { selected in
                     self.selected = selected

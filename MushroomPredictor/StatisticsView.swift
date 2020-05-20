@@ -2,6 +2,13 @@
 //  StatisticsView.swift
 //  MushroomPredictor
 //
+//  The StatisticsView lets the user interact with the kind of graphs
+//  they want to generate, and for which mushroom properties to
+//  generate the graphs for.
+//
+//  This view allows the user to generate pie, bar, and heat map
+//  graphs.
+//
 //  Created by Aaron Mathews on 5/6/20.
 //  Copyright © 2020 Aaron Mathews. All rights reserved.
 //
@@ -9,8 +16,15 @@
 import SwiftUI
 
 struct StatisticsView: View {
+    
+    // The Statistics object is used to send the HTTP requests to
+    // the Azure API
     var statistics: Statistics = Statistics()
+    
+    // The types of graphs the view can generate
     var graphTypes: [String] = ["Pie", "Bar", "Heat Map"]
+    
+    // A list of the mushroom properties
     var props: [String] = ["Class", "Cap-Shape", "Cap-Surface", "Cap-Color", "Gill-Attachment", "Gill-Spacing", "Gill-Size", "Gill-Color", "Stalk-Shape", "Stalk-Root", "Stalk-Surface-Above-Ring", "Stalk-Surface-Below-Ring", "Stalk-Color-Above-Ring", "Stalk-Color-Below-Ring", "Veil-Type", "Veil-Color", "Ring-Number", "Ring-Type", "Bruises", "Odor", "Spore-Print-Color", "Population", "Habitat"]
     
     @State var image: UIImage = UIImage()
@@ -25,6 +39,7 @@ struct StatisticsView: View {
                 Text("Mushroom Statistics")
                     .font(.title)
                 
+                // Menu section
                 VStack {
                     HStack {
                         DropDownMenu(label: "Graph Type", menuVals: self.graphTypes, alignment: .leading
@@ -39,8 +54,13 @@ struct StatisticsView: View {
                     Button(action: {
                         self.isLoading = true
                         
+                        // If the selected graphType is not a heat
+                        // map send one request
                         if self.selectedGraphType != "Heat Map" {
                             self.statistics.postJson(graphType: self.selectedGraphType.lowercased(), prop: self.selectedProp.lowercased()) { result in
+                                
+                                // Convert the base64 code into an
+                                // image
                                 if let imageObj = result["image"] as? String {
                                     if let imageData = Data(base64Encoded: imageObj) {
                                         if let uiImage = UIImage(data: imageData) {
@@ -55,8 +75,13 @@ struct StatisticsView: View {
                                 
                                 self.isLoading = false
                             }
+                        // If the selected graphType is a heat map
+                        // send the request for a heat map
                         } else {
                             self.statistics.postJsonHeatMap(prop: self.selectedProp.lowercased()) { result in
+                                
+                                // Convert the base64 code to an
+                                // image
                                 if let imageObj = result["image"] as? String {
                                     if let imageData = Data(base64Encoded: imageObj) {
                                         if let uiImage = UIImage(data: imageData) {
@@ -83,6 +108,7 @@ struct StatisticsView: View {
                     }
                 } // End Search Section VStack
                 
+                // The graph image
                 Image(uiImage: self.image)
                     .resizable()
                     .aspectRatio(contentMode: .fit)
@@ -100,9 +126,13 @@ struct StatisticsView: View {
                 Spacer()
             } // End of Section VStack
             .onAppear {
+                // When the view appears load one graph to display
+                // to the user
                 self.isLoading = true
 
                 self.statistics.postJson(graphType: self.selectedGraphType.lowercased(), prop: self.selectedProp.lowercased()) { result in
+                    
+                    // Convert the base64 string to an image
                     if let imageObj = result["image"] as? String {
                         if let imageData = Data(base64Encoded: imageObj) {
                             if let uiImage = UIImage(data: imageData) {
@@ -115,11 +145,13 @@ struct StatisticsView: View {
                 }
             } // End of VStack
             
+            // Show server error message if anything goes wrong
             if self.errorMsg != "" {
                 VStack {
                     Text(self.errorMsg)
                         .padding()
                     
+                    // Button to close the error message pop up
                     Button(action: {
                         self.errorMsg = ""
                     }) {

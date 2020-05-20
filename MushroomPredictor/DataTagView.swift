@@ -2,6 +2,8 @@
 //  DataTagView.swift
 //  MushroomPredictor
 //
+//  The DataTagView is used to show a property and its tags
+//
 //  Created by Aaron Mathews on 5/17/20.
 //  Copyright © 2020 Aaron Mathews. All rights reserved.
 //
@@ -13,6 +15,9 @@ struct DataTagView: View {
     
     var body: some View {
         Group {
+            // If edible show a green "E"
+            // If poisonous show a red "P"
+            // If anything else show the text
             if self.data == "Edible" {
                 Text("E")
                     .padding(5)

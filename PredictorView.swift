@@ -2,6 +2,13 @@
 //  PredictorView.swift
 //  MushroomPredictor
 //
+//  The PredictorView is the most complicated view. It holds lists
+//  of all of the possible mushroom properties and values and lets
+//  the user pick from those values to run predictions. This view
+//  also handles sending the request to the Azure API, validating
+//  user input, showing the result message, showing error message,
+//  and indicating that the prediction is running.
+//
 //  Created by Aaron Mathews on 5/2/20.
 //  Copyright © 2020 Aaron Mathews. All rights reserved.
 //
@@ -10,6 +17,7 @@ import SwiftUI
 
 struct PredictorView: View {
     
+    // Mushroom property lists
     var capShape: [String] = ["Unknown", "Bell", "Conical", "Convex", "Flat", "Knobbed", "Sunken"]
     
     var capSurface: [String] = ["Unknown", "Fibrous", "Grooves", "Scaly", "Smooth"]
@@ -54,6 +62,7 @@ struct PredictorView: View {
     
     var habitat: [String] = ["Unknown", "Grasses", "Leaves", "Meadows", "Paths", "Urban", "Waste", "Woods"]
     
+    // Selected mushroom properties
     @State private var selectedCapShape: Int = 0
     @State private var selectedCapSurface: Int = 0
     @State private var selectedCapColor: Int = 0
@@ -91,6 +100,8 @@ struct PredictorView: View {
                 Text("Mushroom Predictor")
                     .font(.largeTitle)
                 
+                // The area where all of the drop down mushroom prop
+                // menus live
                 GeometryReader { geometry in
                     ScrollView {
                         VStack(alignment: .leading) {
@@ -269,8 +280,13 @@ struct PredictorView: View {
                     }
                 )
                 
+                // The button that validates the data, and runs the
+                // predictor request
                 Button(action: {var flag: Bool = true
                     
+                    // Start selected prop validation
+                    // If any prop isn't filled out throw a
+                    // validation error
                     if self.$selectedCapShape.wrappedValue == 0 {
                         flag = false
                     }
@@ -359,13 +375,21 @@ struct PredictorView: View {
                         flag = false
                     }
                     
+                    // If the flag is still true, run the prediction
+                    // Else show validation message
                     if flag {
                         let predictor = Predictor()
                         self.isLoading = true
                         
                         predictor.postJson(capShape: self.$selectedCapShape.wrappedValue, capSurface: self.$selectedCapSurface.wrappedValue, capColor: self.$selectedCapColor.wrappedValue, bruises: self.$selectedBruises.wrappedValue, odor: self.$selectedOdor.wrappedValue, gillAttachment: self.$selectedGillAttachment.wrappedValue, gillSpacing: self.$selectedGillSpacing.wrappedValue, gillSize: self.$selectedGillSize.wrappedValue, gillColor: self.$selectedGillColor.wrappedValue, stalkShape: self.$selectedStalkShape.wrappedValue, stalkRoot: self.$selectedStalkRoot.wrappedValue, stalkSurfaceAboveRing: self.$selectedStalkSurfaceAboveRing.wrappedValue, stalkSurfaceBelowRing: self.$selectedStalkSurfaceBelowRing.wrappedValue, stalkColorAboveRing: self.$selectedStalkColorAboveRing.wrappedValue, stalkColorBelowRing: self.$selectedStalkColorBelowRing.wrappedValue, veilType: self.$selectedVeilType.wrappedValue, veilColor: self.$selectedVeilColor.wrappedValue, ringNumber: self.$selectedRingNumber.wrappedValue, ringType: self.$selectedRingType.wrappedValue, sporePrintColor: self.$selectedSporePrintColor.wrappedValue, population: self.$selectedPopulation.wrappedValue, habitat: self.$selectedHabitat.wrappedValue) { result in
                             
+                           // If there is a prediction prop value,
+                           // set the prediction value
                            if let prediction = result["prediction"] as? Int {
+                                
+                                // 1 correlates to Poisonous, and
+                                // 2 correlates to Edible, anything
+                                // esle is an error
                                 if prediction == 1 {
                                     self.prediction = "Poisonous"
                                 } else if prediction == 2 {
@@ -377,12 +401,17 @@ struct PredictorView: View {
                                 self.prediction = "Unknown"
                             }
                             
+                            // If there is confidence prop value,
+                            // turn the confidence value into a
+                            // percentage.
                             if let confidence = result["confidence"] as? Int {
                                 self.confidence = Double(confidence) * 100.0
                             } else {
                                 self.confidence = -1.0
                             }
                             
+                            // If there is an error prop value,
+                            // set the error message
                             if let error = result["error"] as? String {
                                 self.errorMsg = error
                             }
@@ -405,6 +434,7 @@ struct PredictorView: View {
                 .padding(.top)
             }
             
+            // Show the validation error when there is one
             if self.validationError {
                 VStack {
                     Text("Please fill out all of the criteria...")
@@ -428,6 +458,7 @@ struct PredictorView: View {
                     RoundedRectangle(cornerRadius: 20)
                         .stroke(Color.black, lineWidth: 1)
                 )
+            // Show the error message when there is one
             } else if self.errorMsg != "" {
                 VStack {
                     Text(self.errorMsg)
@@ -451,6 +482,7 @@ struct PredictorView: View {
                     RoundedRectangle(cornerRadius: 20)
                         .stroke(Color.black, lineWidth: 2)
                 )
+            // Show the mushroom results
             } else {
                 if (self.prediction != "" && self.confidence != -1.0) {
                     VStack {

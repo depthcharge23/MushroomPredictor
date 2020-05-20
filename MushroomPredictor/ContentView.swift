@@ -2,6 +2,9 @@
 //  ContentView.swift
 //  MushroomPredictor
 //
+//  The ContentView holds the logic of what views to show
+//  and when to show them.
+//
 //  Created by Aaron Mathews on 4/29/20.
 //  Copyright © 2020 Aaron Mathews. All rights reserved.
 //
@@ -13,6 +16,9 @@ struct ContentView: View {
     
     var body: some View {
         Group {
+            
+            // If the user was able to sign in successfully, show the
+            // tab view that holds the three main views
             if self.signInSuccess {
                 TabView {
                     VStack {
@@ -29,6 +35,7 @@ struct ContentView: View {
                         TaggedDataView()
                     }.tabItem { Text("Tagged Data") }.tag(3)
                 }
+            // Stay on the LoginView by default
             } else {
                 LoginView(callback: { result in
                     self.signInSuccess = result
