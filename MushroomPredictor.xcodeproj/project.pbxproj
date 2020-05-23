@@ -18,7 +18,6 @@
 		C510DAA32459D5F200ECDC65 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C510DAA12459D5F200ECDC65 /* LaunchScreen.storyboard */; };
 		C510DAAE2459D5F200ECDC65 /* MushroomPredictorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C510DAAD2459D5F200ECDC65 /* MushroomPredictorTests.swift */; };
 		C510DABB245A5D8F00ECDC65 /* Predictor.swift in Sources */ = {isa = PBXBuildFile; fileRef = C510DABA245A5D8F00ECDC65 /* Predictor.swift */; };
-		C510DAC1245E833E00ECDC65 /* PredictorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C510DAC0245E833E00ECDC65 /* PredictorView.swift */; };
 		C510DAC3245F84C400ECDC65 /* MushroomResultView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C510DAC2245F84C400ECDC65 /* MushroomResultView.swift */; };
 		C510DAC52460D01300ECDC65 /* RadioButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = C510DAC42460D01300ECDC65 /* RadioButton.swift */; };
 		C510DAC72460DA7C00ECDC65 /* RadioButtonGroup.swift in Sources */ = {isa = PBXBuildFile; fileRef = C510DAC62460DA7C00ECDC65 /* RadioButtonGroup.swift */; };
@@ -26,6 +25,7 @@
 		C510DACB24639AAA00ECDC65 /* StatisticsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C510DACA24639AAA00ECDC65 /* StatisticsView.swift */; };
 		C510DACD24639ADE00ECDC65 /* Statistics.swift in Sources */ = {isa = PBXBuildFile; fileRef = C510DACC24639ADE00ECDC65 /* Statistics.swift */; };
 		C51B60492464995200EE6B3E /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C51B60482464995200EE6B3E /* LoginView.swift */; };
+		C52661822478E2AC008883F5 /* PredictorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C52661812478E2AC008883F5 /* PredictorView.swift */; };
 		C5C73DEB246A1A0800C70A90 /* ActivityIndicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5C73DEA246A1A0800C70A90 /* ActivityIndicator.swift */; };
 /* End PBXBuildFile section */
 
@@ -55,7 +55,6 @@
 		C510DAAD2459D5F200ECDC65 /* MushroomPredictorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MushroomPredictorTests.swift; sourceTree = "<group>"; };
 		C510DAAF2459D5F200ECDC65 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		C510DABA245A5D8F00ECDC65 /* Predictor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Predictor.swift; sourceTree = "<group>"; };
-		C510DAC0245E833E00ECDC65 /* PredictorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = PredictorView.swift; path = ../PredictorView.swift; sourceTree = "<group>"; };
 		C510DAC2245F84C400ECDC65 /* MushroomResultView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MushroomResultView.swift; sourceTree = "<group>"; };
 		C510DAC42460D01300ECDC65 /* RadioButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RadioButton.swift; sourceTree = "<group>"; };
 		C510DAC62460DA7C00ECDC65 /* RadioButtonGroup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RadioButtonGroup.swift; sourceTree = "<group>"; };
@@ -63,6 +62,7 @@
 		C510DACA24639AAA00ECDC65 /* StatisticsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatisticsView.swift; sourceTree = "<group>"; };
 		C510DACC24639ADE00ECDC65 /* Statistics.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Statistics.swift; sourceTree = "<group>"; };
 		C51B60482464995200EE6B3E /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
+		C52661812478E2AC008883F5 /* PredictorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PredictorView.swift; sourceTree = "<group>"; };
 		C5C73DEA246A1A0800C70A90 /* ActivityIndicator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityIndicator.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -113,7 +113,6 @@
 				C510DACA24639AAA00ECDC65 /* StatisticsView.swift */,
 				C510DACC24639ADE00ECDC65 /* Statistics.swift */,
 				C510DAC2245F84C400ECDC65 /* MushroomResultView.swift */,
-				C510DAC0245E833E00ECDC65 /* PredictorView.swift */,
 				C507A6202471D6CC00B39DB1 /* DataTagView.swift */,
 				C510DAC82460DFAF00ECDC65 /* DropDownMenu.swift */,
 				C510DABA245A5D8F00ECDC65 /* Predictor.swift */,
@@ -125,6 +124,7 @@
 				C510DAC62460DA7C00ECDC65 /* RadioButtonGroup.swift */,
 				C507A6242471DB9700B39DB1 /* TaggedDataView.swift */,
 				C507A6262471DF3F00B39DB1 /* TaggedDataScrollView.swift */,
+				C52661812478E2AC008883F5 /* PredictorView.swift */,
 			);
 			path = MushroomPredictor;
 			sourceTree = "<group>";
@@ -252,12 +252,12 @@
 				C510DACD24639ADE00ECDC65 /* Statistics.swift in Sources */,
 				C510DAC72460DA7C00ECDC65 /* RadioButtonGroup.swift in Sources */,
 				C507A6252471DB9700B39DB1 /* TaggedDataView.swift in Sources */,
+				C52661822478E2AC008883F5 /* PredictorView.swift in Sources */,
 				C507A6272471DF3F00B39DB1 /* TaggedDataScrollView.swift in Sources */,
 				C5C73DEB246A1A0800C70A90 /* ActivityIndicator.swift in Sources */,
 				C510DAC92460DFAF00ECDC65 /* DropDownMenu.swift in Sources */,
 				C510DA992459D5F200ECDC65 /* SceneDelegate.swift in Sources */,
 				C51B60492464995200EE6B3E /* LoginView.swift in Sources */,
-				C510DAC1245E833E00ECDC65 /* PredictorView.swift in Sources */,
 				C510DAC3245F84C400ECDC65 /* MushroomResultView.swift in Sources */,
 				C507A6212471D6CC00B39DB1 /* DataTagView.swift in Sources */,
 				C510DAC52460D01300ECDC65 /* RadioButton.swift in Sources */,
